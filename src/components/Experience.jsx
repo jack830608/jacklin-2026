@@ -1,34 +1,36 @@
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 import { FiCpu, FiCalendar, FiGlobe, FiZap } from 'react-icons/fi'
-import { useState } from 'react'
+import { useState, useRef, useMemo } from 'react'
 
 const Experience = () => {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-10% 0px -10% 0px" })
   
   // Pre-generate star data to avoid re-calculation on every render
-  const [starData] = useState(() => {
-    return [...Array(75)].map((_, i) => ({
+  const starData = useMemo(() => {
+    return [...Array(45)].map((_, i) => ({
       id: i,
       size: Math.random(),
       brightness: Math.random(),
       left: Math.random() * 100,
       top: Math.random() * 100,
-      duration: 2 + Math.random() * 4,
-      delay: Math.random() * 3
+      duration: 5 + Math.random() * 2,
+      delay: Math.random() * 2
     }))
-  })
+  }, [])
   
   // Pre-generate neural network data
-  const [neuralData] = useState(() => {
-    return [...Array(15)].map((_, i) => ({
+  const neuralData = useMemo(() => {
+    return [...Array(8)].map((_, i) => ({
       id: i,
       left: Math.random() * 100,
       top: Math.random() * 100,
-      moveX: Math.random() * 40 - 20,
-      moveY: Math.random() * 40 - 20,
-      duration: 4 + Math.random() * 6,
-      delay: Math.random() * 4
+      moveX: Math.random() * 10 - 5,
+      moveY: Math.random() * 10 - 5,
+      duration: 10 + Math.random() * 3,
+      delay: Math.random() * 3
     }))
-  })
+  }, [])
 
   const aiEvolutions = [
     {
@@ -96,91 +98,122 @@ const Experience = () => {
   }
 
   return (
-    <section className="h-screen flex flex-col justify-center bg-black relative overflow-hidden">
-      {/* Deeper Space Background - Closer View */}
-      <div className="absolute inset-0">
-        {/* Larger, Closer Stars */}
-        {starData.map((star) => (
-          <motion.div
-            key={`experience-star-${star.id}`}
-            className="absolute rounded-full bg-white"
-            style={{
-              left: `${star.left}%`,
-              top: `${star.top}%`,
-              width: star.size > 0.8 ? '4px' : star.size > 0.6 ? '3px' : '2px',
-              height: star.size > 0.8 ? '4px' : star.size > 0.6 ? '3px' : '2px',
-              opacity: star.brightness * 0.8 + 0.2,
-              boxShadow: star.size > 0.7 ? `0 0 ${star.size * 8}px white` : 'none'
-            }}
-            animate={{
-              opacity: [star.brightness * 0.8 + 0.2, star.brightness * 0.4 + 0.6, star.brightness * 0.8 + 0.2],
-              scale: star.size > 0.7 ? [1, 1.3, 1] : [1, 1.1, 1]
-            }}
-            transition={{
-              duration: star.duration,
-              repeat: Infinity,
-              delay: star.delay,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
+    <section ref={ref} className="h-screen flex flex-col justify-center bg-black relative overflow-hidden">
+      {/* Optimized Background with More Visual Elements */}
+      <motion.div 
+        className="absolute inset-0"
+        initial={{ scale: 0.75, opacity: 0 }}
+        animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.75, opacity: 0 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+      >
+        {/* Static Background Stars - CSS animated for better performance */}
+        <div className="absolute inset-0">
+          {[...Array(60)].map((_, i) => (
+            <div
+              key={`static-star-${i}`}
+              className="absolute bg-white rounded-full animate-twinkle"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                width: Math.random() > 0.7 ? '3px' : Math.random() > 0.4 ? '2px' : '1px',
+                height: Math.random() > 0.7 ? '3px' : Math.random() > 0.4 ? '2px' : '1px',
+                opacity: Math.random() * 0.5 + 0.2,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${3 + Math.random() * 2}s`
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Simplified Stars - CSS animated */}
+        <div className="absolute inset-0">
+          {starData.map((star) => (
+            <div
+              key={`experience-star-${star.id}`}
+              className="absolute rounded-full bg-white animate-twinkle"
+              style={{
+                left: `${star.left}%`,
+                top: `${star.top}%`,
+                width: star.size > 0.8 ? '4px' : star.size > 0.6 ? '3px' : '2px',
+                height: star.size > 0.8 ? '4px' : star.size > 0.6 ? '3px' : '2px',
+                opacity: star.brightness * 0.8 + 0.3,
+                boxShadow: star.size > 0.8 ? `0 0 ${star.size * 6}px white` : star.size > 0.6 ? `0 0 ${star.size * 4}px white` : `0 0 ${star.size * 2}px white`,
+                animationDelay: `${star.delay}s`,
+                animationDuration: `${star.duration}s`
+              }}
+            />
+          ))}
+        </div>
         
-        {/* Closer Nebula Clouds */}
+        {/* Multiple Simplified Nebula Clouds */}
         {[
-          { x: 20, y: 15, size: 300, color1: '#8b5cf6', color2: '#ff0080' },
-          { x: 70, y: 60, size: 250, color1: '#00f5ff', color2: '#8b5cf6' },
+          { x: 45, y: 40, size: 200, color1: '#8b5cf6', color2: '#00f5ff' },
+          { x: 20, y: 70, size: 150, color1: '#ff0080', color2: '#8b5cf6' },
+          { x: 80, y: 20, size: 180, color1: '#00f5ff', color2: '#00ff87' },
         ].map((nebula, index) => (
           <motion.div
-            key={`close-nebula-${index}`}
-            className="absolute rounded-full opacity-15"
+            key={`nebula-${index}`}
+            className="absolute rounded-full opacity-8"
             style={{
               left: `${nebula.x}%`,
               top: `${nebula.y}%`,
               width: `${nebula.size}px`,
               height: `${nebula.size}px`,
-              background: `radial-gradient(circle, ${nebula.color1}30 0%, ${nebula.color2}20 40%, transparent 80%)`,
-              filter: 'blur(2px)',
+              background: `radial-gradient(circle, ${nebula.color1}20 0%, ${nebula.color2}10 40%, transparent 80%)`,
+              filter: 'blur(1px)',
               transform: 'translate(-50%, -50%)'
             }}
             animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.1, 0.2, 0.1],
-              rotate: [0, 90, 180]
+              scale: [1, 1.03, 1],
+              opacity: [0.06, 0.1, 0.06],
             }}
             transition={{
-              duration: 20 + index * 5,
+              duration: 30 + index * 10,
               repeat: Infinity,
               ease: "easeInOut"
             }}
           />
         ))}
         
-        {/* Floating AI Neural Networks - More Prominent */}
-        {neuralData.map((neural) => (
-          <motion.div
-            key={`neural-${neural.id}`}
-            className="absolute bg-neon-cyan rounded-full"
-            style={{
-              left: `${neural.left}%`,
-              top: `${neural.top}%`,
-              width: '3px',
-              height: '3px',
-              boxShadow: '0 0 10px #00f5ff'
-            }}
-            animate={{
-              opacity: [0.3, 1, 0.3],
-              scale: [1, 1.8, 1],
-              x: [0, neural.moveX, 0],
-              y: [0, neural.moveY, 0]
-            }}
-            transition={{
-              duration: neural.duration,
-              repeat: Infinity,
-              delay: neural.delay,
-            }}
-          />
-        ))}
-      </div>
+        {/* Simplified Neural Networks - CSS animated */}
+        <div className="absolute inset-0">
+          {neuralData.map((neural) => (
+            <div
+              key={`neural-${neural.id}`}
+              className="absolute bg-neon-cyan rounded-full animate-pulse"
+              style={{
+                left: `${neural.left}%`,
+                top: `${neural.top}%`,
+                width: '2px',
+                height: '2px',
+                boxShadow: '0 0 6px #00f5ff',
+                animationDelay: `${neural.delay}s`,
+                animationDuration: `${neural.duration}s`
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Static Connection Lines - CSS animated */}
+        <div className="absolute inset-0">
+          {[...Array(10)].map((_, i) => (
+            <div
+              key={`connection-${i}`}
+              className="absolute bg-gradient-to-r from-transparent via-neon-cyan/20 to-transparent animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                width: `${20 + Math.random() * 30}px`,
+                height: '1px',
+                transform: `rotate(${Math.random() * 360}deg)`,
+                opacity: 0.3,
+                animationDelay: `${Math.random() * 2}s`,
+                animationDuration: `${4 + Math.random() * 2}s`
+              }}
+            />
+          ))}
+        </div>
+      </motion.div>
       
       <div className="section-container section-padding relative z-10 h-full flex flex-col justify-center">
         <motion.div
@@ -194,12 +227,12 @@ const Experience = () => {
             className="text-4xl md:text-5xl font-bold text-white mb-3"
             animate={{
               textShadow: [
-                '0 0 20px rgba(0, 245, 255, 0.4)',
-                '0 0 30px rgba(139, 92, 246, 0.5)',
-                '0 0 20px rgba(0, 245, 255, 0.4)'
+                '0 0 10px rgba(0, 245, 255, 0.3)',
+                '0 0 15px rgba(139, 92, 246, 0.4)',
+                '0 0 10px rgba(0, 245, 255, 0.3)'
               ]
             }}
-            transition={{ duration: 4, repeat: Infinity }}
+            transition={{ duration: 6, repeat: Infinity }}
           >
             AI <span className="bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-pink bg-clip-text text-transparent">Evolution</span> Log
           </motion.h2>
@@ -221,20 +254,13 @@ const Experience = () => {
             <motion.div
               key={evolution.id}
               variants={itemVariants}
-              className="group relative rounded-2xl overflow-hidden border-2 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 bg-black/80 backdrop-blur-lg h-80"
+              className="group relative rounded-2xl overflow-hidden border-2 transition-all duration-200 hover:shadow-lg hover:-translate-y-1 bg-black/80 backdrop-blur-sm h-80"
               style={{
                 borderColor: index === 0 ? 'rgba(0, 245, 255, 0.4)' : index === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)',
-                boxShadow: `0 10px 40px ${
+                boxShadow: `0 8px 25px ${
                   index === 0 ? 'rgba(0, 245, 255, 0.1)' : 
                   index === 1 ? 'rgba(139, 92, 246, 0.1)' : 
                   'rgba(0, 255, 135, 0.1)'
-                }`
-              }}
-              whileHover={{
-                boxShadow: `0 20px 60px ${
-                  index === 0 ? 'rgba(0, 245, 255, 0.3)' : 
-                  index === 1 ? 'rgba(139, 92, 246, 0.3)' : 
-                  'rgba(0, 255, 135, 0.3)'
                 }`
               }}
             >
@@ -249,29 +275,28 @@ const Experience = () => {
                    }}>
                 <div className="absolute inset-0 bg-black/40"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                    className="w-10 h-10 rounded-full flex items-center justify-center"
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center animate-spin"
                     style={{
                       background: `linear-gradient(135deg, ${
                         index === 0 ? '#00f5ff, #8b5cf6' : 
                         index === 1 ? '#8b5cf6, #ff0080' : 
                         '#00ff87, #8b5cf6'
                       })`,
-                      boxShadow: `0 0 20px ${
-                        index === 0 ? 'rgba(0, 245, 255, 0.6)' : 
-                        index === 1 ? 'rgba(139, 92, 246, 0.6)' : 
-                        'rgba(0, 255, 135, 0.6)'
-                      }`
+                      boxShadow: `0 0 12px ${
+                        index === 0 ? 'rgba(0, 245, 255, 0.4)' : 
+                        index === 1 ? 'rgba(139, 92, 246, 0.4)' : 
+                        'rgba(0, 255, 135, 0.4)'
+                      }`,
+                      animationDuration: '15s'
                     }}
                   >
                     <FiCpu className="w-5 h-5 text-white" />
-                  </motion.div>
+                  </div>
                 </div>
                 
                 {/* Year Badge */}
-                <div className="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-lg"
+                <div className="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
                      style={{
                        backgroundColor: `${
                          index === 0 ? 'rgba(0, 245, 255, 0.2)' :
@@ -299,7 +324,7 @@ const Experience = () => {
                   STAGE #{3 - index}
                 </div>
                 
-                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-neon-cyan transition-colors duration-300 leading-tight">
+                <h3 className="text-lg font-bold text-white mb-2 group-hover:bg-gradient-to-r group-hover:from-neon-cyan group-hover:via-neon-purple group-hover:to-neon-pink group-hover:bg-clip-text group-hover:text-transparent group-hover:animate-gradient-x transition-all duration-300 leading-tight">
                   {evolution.stage}
                 </h3>
                 
@@ -337,7 +362,7 @@ const Experience = () => {
                           }`
                         }}
                       >
-                        {ability.replace(/[🛸⚡👨‍🚀🎨🔄🔍🎯📐🚀]/g, '').trim()}
+                        {ability.replace(/[\u{1F6F8}\u{26A1}\u{1F468}\u{200D}\u{1F680}\u{1F3A8}\u{1F504}\u{1F50D}\u{1F3AF}\u{1F4CF}\u{1F680}]/gu, '').trim()}
                       </span>
                     ))}
                   </div>

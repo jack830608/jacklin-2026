@@ -4,18 +4,176 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  * {
-    border-color: rgb(63 63 70 / 0.2);
+/* Performance optimizations */
+* {
+  /* Force hardware acceleration for all elements */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: auto;
+}
+
+/* Optimize animations */
+.motion-safe\:animate-* {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Reduce paint complexity */
+body {
+  /* Prevent layout thrashing */
+  contain: layout style paint;
+  @apply bg-dark-50 text-dark-900 font-sans;
+  @apply antialiased;
+}
+
+/* Optimize scrolling */
+html {
+  scroll-behavior: smooth;
+  /* Reduce scroll complexity */
+  overflow-x: hidden;
+}
+
+/* Performance-focused utility classes */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Reduce animation complexity for better performance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom scrollbar for better performance */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 245, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 245, 255, 0.5);
+}
+
+/* Optimize text rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Reduce paint area for animations */
+.animate-particles * {
+  contain: layout style paint;
+  will-change: transform;
+}
+
+/* Optimize backdrop filters */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Custom neon colors with reduced complexity */
+:root {
+  --neon-cyan: #00f5ff;
+  --neon-pink: #ff0080;
+  --neon-purple: #8b5cf6;
+  --neon-green: #00ff87;
+  --neon-yellow: #ffff00;
+}
+
+/* Optimized gradient backgrounds */
+.bg-gradient-neon {
+  background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+  background-size: 200% 200%;
+}
+
+/* Performance-optimized animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) translateZ(0); }
+  50% { transform: translateY(-8px) translateZ(0); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 4px currentColor; }
+  50% { box-shadow: 0 0 15px currentColor; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg) translateZ(0); }
+  to { transform: rotate(360deg) translateZ(0); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1) translateZ(0); }
+  50% { opacity: 0.6; transform: scale(1.1) translateZ(0); }
+}
+
+.animate-twinkle {
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) translateZ(0); }
+  50% { transform: translateY(-8px) translateZ(0); }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Apply optimizations to common elements */
+button, a, .interactive {
+  transition: all 0.15s ease;
+  will-change: transform, opacity;
+}
+
+/* Reduce repaints for fixed elements */
+.fixed {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Optimize for mobile devices */
+@media (max-width: 768px) {
+  /* Reduce animation complexity on mobile */
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
   }
   
-  body {
-    @apply bg-dark-50 text-dark-900 font-sans;
-    @apply antialiased;
+  /* Reduce particle count on mobile */
+  .particle {
+    display: none;
   }
   
-  html {
-    @apply scroll-smooth;
+  /* Simplify shadows on mobile */
+  .shadow-neon {
+    box-shadow: 0 0 8px currentColor;
   }
 }
 
@@ -39,31 +197,31 @@
   }
   
   .card-hover {
-    @apply transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-neon-cyan/20 hover:-rotate-1;
+    @apply transition-all duration-200 hover:scale-101 hover:shadow-lg hover:shadow-neon-cyan/10;
   }
   
   .card-glow {
-    @apply transition-all duration-300 hover:shadow-lg hover:shadow-accent-500/30;
+    @apply transition-all duration-200 hover:shadow-md hover:shadow-accent-500/20;
   }
   
   .btn-primary {
-    @apply bg-gradient-to-r from-primary-600 to-accent-600 hover:from-accent-600 hover:to-primary-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-accent-500/30 hover:scale-105 transform;
+    @apply bg-gradient-to-r from-primary-600 to-accent-600 hover:from-accent-600 hover:to-primary-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-lg hover:shadow-accent-500/20 hover:scale-102 transform;
   }
   
   .btn-outline {
-    @apply border-2 border-neon-cyan text-neon-cyan hover:bg-neon-cyan hover:text-dark-50 px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-neon-cyan/50;
+    @apply border-2 border-neon-cyan text-neon-cyan hover:bg-neon-cyan hover:text-dark-50 px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-102 hover:shadow-md hover:shadow-neon-cyan/30;
   }
   
   .btn-neon {
-    @apply bg-transparent border-2 border-neon-pink text-neon-pink hover:bg-neon-pink hover:text-dark-50 px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 animate-glow;
+    @apply bg-transparent border-2 border-neon-pink text-neon-pink hover:bg-neon-pink hover:text-dark-50 px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-102;
   }
   
   .neon-border {
-    box-shadow: 0 0 5px theme('colors.neon.cyan'), 0 0 10px theme('colors.neon.cyan'), 0 0 15px theme('colors.neon.cyan');
+    box-shadow: 0 0 3px theme('colors.neon.cyan'), 0 0 6px theme('colors.neon.cyan');
   }
   
   .interactive-hover {
-    @apply transition-all duration-300 hover:scale-110 hover:rotate-3 hover:shadow-xl cursor-pointer;
+    @apply transition-all duration-200 hover:scale-105 hover:rotate-1 hover:shadow-lg cursor-pointer;
   }
   
   .pulse-glow {
@@ -80,4 +238,17 @@
   .text-shadow-lg {
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
+}
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+.animate-gradient-x {
+  animation: gradient-x 1.8s ease-in-out infinite;
+  background-size: 300% 100%;
 }

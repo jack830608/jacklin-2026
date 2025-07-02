@@ -12,7 +12,7 @@ const MouseFollower = () => {
     throttleTimeoutRef.current = setTimeout(() => {
       setMousePosition({ x: e.clientX, y: e.clientY })
       throttleTimeoutRef.current = null
-    }, 8) // ~120fps - much more responsive
+    }, 32) // Increased throttle to ~30fps for better performance
   }, [])
 
   useEffect(() => {
@@ -48,116 +48,80 @@ const MouseFollower = () => {
 
   return (
     <>
-      {/* Rocket Emoji Cursor */}
+      {/* Optimized Rocket Emoji Cursor */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-50 text-2xl select-none"
         style={{
-          filter: `drop-shadow(0 0 8px ${isHovering ? '#ff0080' : '#00f5ff'}) drop-shadow(0 0 16px ${isHovering ? '#8b5cf6' : '#0088ff'})`,
+          filter: `drop-shadow(0 0 4px ${isHovering ? '#ff0080' : '#00f5ff'})`, // Reduced shadow complexity
+          transform: 'translateZ(0)' // Force hardware acceleration
         }}
         animate={{
           x: mousePosition.x - 12,
           y: mousePosition.y - 12,
-          scale: isHovering ? 1.4 : 1,
-          rotate: isHovering ? 15 : 0,
-          filter: [
-            `drop-shadow(0 0 8px ${isHovering ? '#ff0080' : '#00f5ff'}) drop-shadow(0 0 16px ${isHovering ? '#8b5cf6' : '#0088ff'})`,
-            `drop-shadow(0 0 12px ${isHovering ? '#ff0080' : '#00f5ff'}) drop-shadow(0 0 24px ${isHovering ? '#8b5cf6' : '#0088ff'})`,
-            `drop-shadow(0 0 8px ${isHovering ? '#ff0080' : '#00f5ff'}) drop-shadow(0 0 16px ${isHovering ? '#8b5cf6' : '#0088ff'})`
-          ]
+          scale: isHovering ? 1.2 : 1, // Reduced scale
+          rotate: isHovering ? 5 : 0, // Reduced rotation
         }}
         transition={{
           type: "spring",
-          stiffness: 500,
-          damping: 30,
+          stiffness: 300, // Reduced stiffness
+          damping: 20,
           mass: 0.1,
-          filter: { duration: 2, repeat: Infinity }
         }}
       >
         🚀
       </motion.div>
 
-      {/* Enhanced Engine Trail */}
-      {[...Array(8)].map((_, i) => (
+      {/* Simplified Engine Trail - only show when hovering */}
+      {isHovering && [...Array(2)].map((_, i) => ( // Reduced from 4 to 2, only show on hover
         <motion.div
           key={i}
           className="fixed top-0 left-0 pointer-events-none z-40"
           style={{
-            width: `${8 - i}px`,
-            height: `${8 - i}px`,
+            width: `${4 - i}px`,
+            height: `${4 - i}px`,
             background: `radial-gradient(circle, ${
-              ['#ff4500', '#ff6600', '#ffaa00', '#ffd700', '#00f5ff', '#0088ff', '#8b5cf6', '#ff0080'][i]
+              ['#ff4500', '#00f5ff'][i]
             } 60%, transparent 100%)`,
             borderRadius: '50%',
+            transform: 'translateZ(0)'
           }}
           animate={{
-            x: mousePosition.x - 8 + (Math.random() - 0.5) * 6,
-            y: mousePosition.y + 18 + i * 4,
-            opacity: [0.9, 0.6, 0.1],
-            scale: [1.2, 0.8, 0.2],
+            x: mousePosition.x - 4 + (Math.random() - 0.5) * 2,
+            y: mousePosition.y + 18 + i * 2,
+            opacity: [0.5, 0.2, 0.1],
+            scale: [1, 0.6, 0.2],
           }}
           transition={{
-            delay: i * 0.02,
-            duration: 0.5,
+            delay: i * 0.05,
+            duration: 0.3,
             ease: "easeOut",
           }}
         />
       ))}
 
-      {/* Sparkling Stars */}
-      {[...Array(3)].map((_, i) => (
+      {/* Simplified Orbital Ring - only show when hovering */}
+      {isHovering && (
         <motion.div
-          key={`star-${i}`}
-          className="fixed top-0 left-0 pointer-events-none z-35 text-xs select-none"
+          className="fixed top-0 left-0 w-10 h-10 rounded-full border pointer-events-none z-30" // Reduced size
           style={{
-            filter: `drop-shadow(0 0 4px ${['#ffd700', '#00f5ff', '#ff0080'][i]})`,
+            borderColor: '#8b5cf6',
+            borderWidth: '1px',
+            borderStyle: 'dotted',
+            opacity: 0.3, // Reduced opacity
+            transform: 'translateZ(0)'
           }}
           animate={{
-            x: mousePosition.x - 16 + (Math.random() - 0.5) * 30,
-            y: mousePosition.y - 16 + (Math.random() - 0.5) * 30,
-            opacity: [0, 1, 0],
-            scale: [0.5, 1.2, 0.5],
-            rotate: [0, 180, 360],
+            x: mousePosition.x - 20,
+            y: mousePosition.y - 20,
+            scale: 1.1, // Reduced scale
+            rotate: [0, 360],
           }}
           transition={{
-            delay: i * 0.3,
-            duration: 1,
-            ease: "easeOut",
-            repeat: Infinity,
-            repeatDelay: 2,
+            rotate: { duration: 10, repeat: Infinity, ease: "linear" }, // Slower rotation
+            scale: { type: "spring", stiffness: 200, damping: 20 }
           }}
-        >
-          ✨
-        </motion.div>
-      ))}
-
-      {/* Orbital Ring */}
-      <motion.div
-        className="fixed top-0 left-0 w-16 h-16 rounded-full border pointer-events-none z-30"
-        style={{
-          borderColor: isHovering ? '#8b5cf6' : '#00f5ff',
-          borderWidth: '1px',
-          borderStyle: 'dotted',
-          opacity: 0.6,
-        }}
-        animate={{
-          x: mousePosition.x - 32,
-          y: mousePosition.y - 32,
-          scale: isHovering ? 1.3 : 1,
-          rotate: [0, 360],
-          borderColor: [
-            isHovering ? '#8b5cf6' : '#00f5ff',
-            isHovering ? '#ff0080' : '#ffd700',
-            isHovering ? '#8b5cf6' : '#00f5ff'
-          ],
-          opacity: [0.3, 0.8, 0.3]
-        }}
-        transition={{
-          rotate: { duration: 6, repeat: Infinity, ease: "linear" },
-          borderColor: { duration: 3, repeat: Infinity },
-          opacity: { duration: 2, repeat: Infinity },
-          scale: { type: "spring", stiffness: 200, damping: 20 }
-        }}
-      />
+        />
+      )}
     </>
   )
 }
