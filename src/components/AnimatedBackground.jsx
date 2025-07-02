@@ -1,13 +1,18 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
-const AnimatedBackground = () => {
+const AnimatedBackground = ({ currentSection = 0 }) => {
   const [particles, setParticles] = useState([])
+  
+  // Define zoom levels for each section (1 = normal, <1 = zoom out, >1 = zoom in)
+  const sectionZoomLevels = [1, 0.7, 0.4] // Introduction, Experience, Projects
+  const currentZoom = sectionZoomLevels[currentSection] || 1
 
   useEffect(() => {
     const generateParticles = () => {
       const newParticles = []
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 25; i++) {
+        const randomValue = Math.random() // Use single random for consistency
         newParticles.push({
           id: i,
           x: Math.random() * 100,
@@ -16,6 +21,7 @@ const AnimatedBackground = () => {
           color: ['#00f5ff', '#ff0080', '#8b5cf6', '#00ff88', '#ffff00'][Math.floor(Math.random() * 5)],
           delay: Math.random() * 2,
           duration: Math.random() * 3 + 2,
+          moveX: Math.random() * 20 - 10, // Pre-generate movement values
         })
       }
       setParticles(newParticles)
@@ -26,126 +32,139 @@ const AnimatedBackground = () => {
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      {/* Animated Gradient Background */}
+      {/* Zoom Container for Universe Effect */}
       <motion.div
-        className="absolute inset-0"
-        style={{
-          background: `
-            radial-gradient(circle at 20% 80%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(255, 0, 128, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-            linear-gradient(135deg, #0f0f23 0%, #16213e 50%, #1a2332 100%)
-          `
-        }}
+        className="absolute inset-0 origin-center"
         animate={{
-          background: [
-            `radial-gradient(circle at 20% 80%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
-             radial-gradient(circle at 80% 20%, rgba(255, 0, 128, 0.1) 0%, transparent 50%),
-             radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-             linear-gradient(135deg, #0f0f23 0%, #16213e 50%, #1a2332 100%)`,
-            `radial-gradient(circle at 80% 20%, rgba(0, 245, 255, 0.15) 0%, transparent 50%),
-             radial-gradient(circle at 20% 80%, rgba(255, 0, 128, 0.15) 0%, transparent 50%),
-             radial-gradient(circle at 60% 60%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-             linear-gradient(225deg, #16213e 0%, #1a2332 50%, #0f0f23 100%)`,
-            `radial-gradient(circle at 20% 80%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
-             radial-gradient(circle at 80% 20%, rgba(255, 0, 128, 0.1) 0%, transparent 50%),
-             radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-             linear-gradient(135deg, #0f0f23 0%, #16213e 50%, #1a2332 100%)`
-          ]
+          scale: currentZoom,
         }}
         transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut"
+          duration: 1.2,
+          ease: [0.25, 0.46, 0.45, 0.94]
         }}
-      />
-
-      {/* Floating Particles */}
-      {particles.map((particle) => (
+      >
+        {/* Animated Gradient Background */}
         <motion.div
-          key={particle.id}
-          className="absolute rounded-full"
+          className="absolute inset-0"
           style={{
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-            width: `${particle.size}px`,
-            height: `${particle.size}px`,
-            backgroundColor: particle.color,
-            boxShadow: `0 0 10px ${particle.color}, 0 0 20px ${particle.color}`,
+            background: `
+              radial-gradient(circle at 20% 80%, rgba(0, 245, 255, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(255, 0, 128, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+              #000000
+            `
           }}
           animate={{
-            y: [0, -30, 0],
-            x: [0, Math.random() * 20 - 10, 0],
-            opacity: [0.3, 0.8, 0.3],
-            scale: [1, 1.2, 1],
+            background: [
+              `radial-gradient(circle at 20% 80%, rgba(0, 245, 255, 0.05) 0%, transparent 50%),
+               radial-gradient(circle at 80% 20%, rgba(255, 0, 128, 0.05) 0%, transparent 50%),
+               radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+               #000000`,
+              `radial-gradient(circle at 80% 20%, rgba(0, 245, 255, 0.08) 0%, transparent 50%),
+               radial-gradient(circle at 20% 80%, rgba(255, 0, 128, 0.08) 0%, transparent 50%),
+               radial-gradient(circle at 60% 60%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+               #000000`,
+              `radial-gradient(circle at 20% 80%, rgba(0, 245, 255, 0.05) 0%, transparent 50%),
+               radial-gradient(circle at 80% 20%, rgba(255, 0, 128, 0.05) 0%, transparent 50%),
+               radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+               #000000`
+            ]
           }}
           transition={{
-            duration: particle.duration,
-            delay: particle.delay,
+            duration: 15,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
-      ))}
 
-      {/* Grid Pattern */}
-      <motion.div
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(0, 245, 255, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 245, 255, 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '50px 50px'
-        }}
-        animate={{
-          backgroundPosition: ['0px 0px', '50px 50px'],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      />
+        {/* Floating Particles */}
+        {particles.map((particle) => (
+          <motion.div
+            key={particle.id}
+            className="absolute rounded-full"
+            style={{
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+              width: `${particle.size}px`,
+              height: `${particle.size}px`,
+              backgroundColor: particle.color,
+              boxShadow: `0 0 10px ${particle.color}, 0 0 20px ${particle.color}`,
+              willChange: 'transform, opacity'
+            }}
+            animate={{
+              y: [0, -30, 0],
+              x: [0, particle.moveX, 0],
+              opacity: [0.3, 0.8, 0.3],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: particle.duration,
+              delay: particle.delay,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
 
-      {/* Floating Geometric Shapes */}
-      <motion.div
-        className="absolute top-20 left-10 w-32 h-32 border-2 border-neon-cyan/30 rounded-full"
-        animate={{
-          rotate: 360,
-          scale: [1, 1.1, 1],
-        }}
-        transition={{
-          rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-          scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
-        }}
-      />
+        {/* Grid Pattern */}
+        <motion.div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(0, 245, 255, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 245, 255, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px'
+          }}
+          animate={{
+            backgroundPosition: ['0px 0px', '50px 50px'],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
 
-      <motion.div
-        className="absolute bottom-20 right-10 w-24 h-24 border-2 border-neon-pink/30"
-        style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}
-        animate={{
-          rotate: -360,
-          y: [0, -20, 0],
-        }}
-        transition={{
-          rotate: { duration: 15, repeat: Infinity, ease: "linear" },
-          y: { duration: 3, repeat: Infinity, ease: "easeInOut" }
-        }}
-      />
+        {/* Floating Geometric Shapes */}
+        <motion.div
+          className="absolute top-20 left-10 w-32 h-32 border-2 border-neon-cyan/30 rounded-full"
+          animate={{
+            rotate: 360,
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+            scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+          }}
+        />
 
-      <motion.div
-        className="absolute top-1/2 right-1/4 w-16 h-16 border-2 border-neon-purple/30"
-        animate={{
-          rotate: [0, 45, 0],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
+        <motion.div
+          className="absolute bottom-20 right-10 w-24 h-24 border-2 border-neon-pink/30"
+          style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}
+          animate={{
+            rotate: -360,
+            y: [0, -20, 0],
+          }}
+          transition={{
+            rotate: { duration: 15, repeat: Infinity, ease: "linear" },
+            y: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+          }}
+        />
+
+        <motion.div
+          className="absolute top-1/2 right-1/4 w-16 h-16 border-2 border-neon-purple/30"
+          animate={{
+            rotate: [0, 45, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </motion.div>
     </div>
   )
 }

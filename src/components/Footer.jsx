@@ -26,7 +26,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="bg-dark-100 border-t border-dark-200">
+    <footer className="bg-dark-100 border-t border-dark-200 relative z-10">
       <div className="section-container section-padding">
         {/* Main Footer Content */}
         <div className="py-12">
@@ -49,10 +49,11 @@ const Footer = () => {
                   <motion.a
                     key={social.label}
                     href={social.href}
-                    whileHover={{ scale: 1.1, y: -2 }}
+                    whileHover={{ scale: 1.05, y: -1 }}
                     whileTap={{ scale: 0.95 }}
-                    className="p-2 bg-dark-50 rounded-lg text-dark-600 hover:text-primary-400 hover:bg-primary-400/10 transition-all duration-200"
+                    className="p-2 bg-dark-50 rounded-lg text-dark-600 hover:text-primary-400 hover:bg-primary-400/10 transition-all duration-150"
                     aria-label={social.label}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   >
                     <social.icon className="w-5 h-5" />
                   </motion.a>

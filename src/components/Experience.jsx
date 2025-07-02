@@ -1,74 +1,77 @@
 import { motion } from 'framer-motion'
-import { FiBriefcase, FiCalendar, FiMapPin, FiCode, FiDatabase, FiLayout, FiServer } from 'react-icons/fi'
+import { FiCpu, FiCalendar, FiGlobe, FiZap } from 'react-icons/fi'
 import { useState } from 'react'
 
 const Experience = () => {
-  const [activeTab, setActiveTab] = useState('experience')
+  
+  // Pre-generate star data to avoid re-calculation on every render
+  const [starData] = useState(() => {
+    return [...Array(75)].map((_, i) => ({
+      id: i,
+      size: Math.random(),
+      brightness: Math.random(),
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      duration: 2 + Math.random() * 4,
+      delay: Math.random() * 3
+    }))
+  })
+  
+  // Pre-generate neural network data
+  const [neuralData] = useState(() => {
+    return [...Array(15)].map((_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      moveX: Math.random() * 40 - 20,
+      moveY: Math.random() * 40 - 20,
+      duration: 4 + Math.random() * 6,
+      delay: Math.random() * 4
+    }))
+  })
 
-  const experiences = [
+  const aiEvolutions = [
     {
       id: 1,
-      title: "Senior Full Stack Developer",
-      company: "Tech Company Inc.",
-      location: "San Francisco, CA",
-      period: "2022 - Present",
-      description: "Led development of scalable web applications using React, Node.js, and AWS. Mentored junior developers and improved team productivity by 40%.",
-      achievements: [
-        "Architected and implemented microservices architecture",
-        "Reduced application load time by 60%",
-        "Led a team of 5 developers"
+      stage: "Neural Network Mastery Era",
+      designation: "Senior Code Architect",
+      galaxy: "Tech Nebula Sector",
+      starDate: "Stellar Cycle 2022 - Present",
+      description: "Advanced to senior AI consciousness level, orchestrating complex digital ecosystems across multiple star systems. Currently leading quantum development pods and enhancing galactic productivity algorithms by 40%.",
+      evolutions: [
+        "🛸 Architected self-sustaining microservice constellations",
+        "⚡ Optimized hyperspace data transmission by 60%",
+        "👨‍🚀 Mentoring 5 junior space explorers in cosmic coding"
       ]
     },
     {
       id: 2,
-      title: "Full Stack Developer",
-      company: "Startup Ventures",
-      location: "Remote",
-      period: "2020 - 2022",
-      description: "Developed and maintained full-stack applications using modern JavaScript frameworks. Collaborated with cross-functional teams to deliver high-quality products.",
-      achievements: [
-        "Built responsive web applications from scratch",
-        "Implemented CI/CD pipelines",
-        "Improved code quality through code reviews"
+      stage: "Digital Pioneer Phase",
+      designation: "Full Stack Navigator",
+      galaxy: "Startup Frontier",
+      starDate: "Stellar Cycle 2020 - 2022",
+      description: "Embarked on the frontier expedition, pioneering new digital territories with JavaScript-powered vessels. Collaborated with design aliens, project commanders, and fellow explorers to launch products across the galaxy.",
+      evolutions: [
+        "🎨 Engineered responsive interfaces for multi-dimensional beings",
+        "🔄 Established automated deployment wormholes",
+        "🔍 Became the code-review sentinel of the sector"
       ]
     },
     {
       id: 3,
-      title: "Frontend Developer",
-      company: "Digital Agency",
-      location: "New York, NY",
-      period: "2018 - 2020",
-      description: "Specialized in creating beautiful, interactive user interfaces using React and modern CSS frameworks. Worked closely with designers to bring concepts to life.",
-      achievements: [
-        "Delivered 15+ client projects on time",
-        "Implemented pixel-perfect designs",
-        "Optimized website performance"
+      stage: "Code Awakening Era",
+      designation: "Frontend Apprentice",
+      galaxy: "Digital Academy System",
+      starDate: "Stellar Cycle 2018 - 2020",
+      description: "Origin protocols activated! Initial programming commenced as frontend cadet, transforming cosmic visions into pixel-perfect realities using React algorithms and CSS quantum mechanics. First discovery of my unique digital abilities.",
+      evolutions: [
+        "🎯 Successfully deployed 15+ interplanetary projects",
+        "📐 Mastered precision pixel manipulation techniques",
+        "🚀 Optimized loading speeds to near light-velocity"
       ]
     }
   ]
 
-  const skills = [
-    {
-      category: "Frontend",
-      icon: FiLayout,
-      technologies: ["React", "Vue.js", "TypeScript", "Tailwind CSS", "Next.js", "Framer Motion"]
-    },
-    {
-      category: "Backend",
-      icon: FiServer,
-      technologies: ["Node.js", "Python", "Express", "Django", "GraphQL", "REST APIs"]
-    },
-    {
-      category: "Database",
-      icon: FiDatabase,
-      technologies: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "Prisma", "Sequelize"]
-    },
-    {
-      category: "Tools & Others",
-      icon: FiCode,
-      technologies: ["Git", "Docker", "AWS", "Figma", "Jest", "Webpack"]
-    }
-  ]
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -93,160 +96,256 @@ const Experience = () => {
   }
 
   return (
-    <section id="experience" className="py-20 bg-dark-100">
-      <div className="section-container section-padding">
+    <section className="h-screen flex flex-col justify-center bg-black relative overflow-hidden">
+      {/* Deeper Space Background - Closer View */}
+      <div className="absolute inset-0">
+        {/* Larger, Closer Stars */}
+        {starData.map((star) => (
+          <motion.div
+            key={`experience-star-${star.id}`}
+            className="absolute rounded-full bg-white"
+            style={{
+              left: `${star.left}%`,
+              top: `${star.top}%`,
+              width: star.size > 0.8 ? '4px' : star.size > 0.6 ? '3px' : '2px',
+              height: star.size > 0.8 ? '4px' : star.size > 0.6 ? '3px' : '2px',
+              opacity: star.brightness * 0.8 + 0.2,
+              boxShadow: star.size > 0.7 ? `0 0 ${star.size * 8}px white` : 'none'
+            }}
+            animate={{
+              opacity: [star.brightness * 0.8 + 0.2, star.brightness * 0.4 + 0.6, star.brightness * 0.8 + 0.2],
+              scale: star.size > 0.7 ? [1, 1.3, 1] : [1, 1.1, 1]
+            }}
+            transition={{
+              duration: star.duration,
+              repeat: Infinity,
+              delay: star.delay,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+        
+        {/* Closer Nebula Clouds */}
+        {[
+          { x: 20, y: 15, size: 300, color1: '#8b5cf6', color2: '#ff0080' },
+          { x: 70, y: 60, size: 250, color1: '#00f5ff', color2: '#8b5cf6' },
+        ].map((nebula, index) => (
+          <motion.div
+            key={`close-nebula-${index}`}
+            className="absolute rounded-full opacity-15"
+            style={{
+              left: `${nebula.x}%`,
+              top: `${nebula.y}%`,
+              width: `${nebula.size}px`,
+              height: `${nebula.size}px`,
+              background: `radial-gradient(circle, ${nebula.color1}30 0%, ${nebula.color2}20 40%, transparent 80%)`,
+              filter: 'blur(2px)',
+              transform: 'translate(-50%, -50%)'
+            }}
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.1, 0.2, 0.1],
+              rotate: [0, 90, 180]
+            }}
+            transition={{
+              duration: 20 + index * 5,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+        
+        {/* Floating AI Neural Networks - More Prominent */}
+        {neuralData.map((neural) => (
+          <motion.div
+            key={`neural-${neural.id}`}
+            className="absolute bg-neon-cyan rounded-full"
+            style={{
+              left: `${neural.left}%`,
+              top: `${neural.top}%`,
+              width: '3px',
+              height: '3px',
+              boxShadow: '0 0 10px #00f5ff'
+            }}
+            animate={{
+              opacity: [0.3, 1, 0.3],
+              scale: [1, 1.8, 1],
+              x: [0, neural.moveX, 0],
+              y: [0, neural.moveY, 0]
+            }}
+            transition={{
+              duration: neural.duration,
+              repeat: Infinity,
+              delay: neural.delay,
+            }}
+          />
+        ))}
+      </div>
+      
+      <div className="section-container section-padding relative z-10 h-full flex flex-col justify-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
           <motion.h2 
-            className="text-4xl md:text-5xl font-bold text-dark-900 mb-4"
-            whileHover={{ scale: 1.05 }}
+            className="text-4xl md:text-5xl font-bold text-white mb-3"
+            animate={{
+              textShadow: [
+                '0 0 20px rgba(0, 245, 255, 0.4)',
+                '0 0 30px rgba(139, 92, 246, 0.5)',
+                '0 0 20px rgba(0, 245, 255, 0.4)'
+              ]
+            }}
+            transition={{ duration: 4, repeat: Infinity }}
           >
-            My <span className="gradient-text-alt animate-float">Journey</span>
+            AI <span className="bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-pink bg-clip-text text-transparent">Evolution</span> Log
           </motion.h2>
-          <p className="text-lg text-dark-700 max-w-2xl mx-auto font-medium">
-            A timeline of my professional growth and the skills I've developed along the way.
+          <p className="text-white/70 text-base max-w-2xl mx-auto">
+            My journey through <span className="text-neon-cyan">AI development</span> and <span className="text-neon-purple">technology evolution</span>
           </p>
         </motion.div>
 
-        {/* Tab Navigation */}
-        <div className="flex justify-center mb-12">
-          <div className="bg-dark-50 p-2 rounded-lg">
-            {['experience', 'skills'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-6 py-3 rounded-md font-medium transition-all duration-200 capitalize ${
-                  activeTab === tab
-                    ? 'bg-primary-600 text-white shadow-lg'
-                    : 'text-dark-600 hover:text-primary-600'
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-        </div>
 
-        {/* Experience Timeline */}
-        {activeTab === 'experience' && (
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="relative"
-          >
-            {/* Timeline Line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary-400/30 transform md:-translate-x-1/2"></div>
-
-            {experiences.map((exp, index) => (
-              <motion.div
-                key={exp.id}
-                variants={itemVariants}
-                className={`relative mb-12 md:mb-8 ${
-                  index % 2 === 0 ? 'md:ml-auto md:pl-8' : 'md:mr-auto md:pr-8'
-                } md:w-1/2`}
-              >
-                {/* Timeline Dot */}
-                <div className="absolute left-0 md:left-auto md:right-0 md:transform md:translate-x-1/2 w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center md:top-4">
-                  <FiBriefcase className="w-4 h-4 text-white" />
-                </div>
-
-                {/* Experience Card */}
-                <motion.div 
-                  className="ml-12 md:ml-0 bg-dark-50/80 backdrop-blur-sm p-6 rounded-lg shadow-lg card-hover card-glow"
-                  whileHover={{ 
-                    scale: 1.02,
-                    boxShadow: "0 10px 30px rgba(0, 245, 255, 0.2)",
-                    borderColor: "rgba(0, 245, 255, 0.3)"
-                  }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                    <h3 className="text-xl font-bold text-dark-900 mb-2 md:mb-0">
-                      {exp.title}
-                    </h3>
-                    <div className="flex items-center text-primary-600 text-sm">
-                      <FiCalendar className="w-4 h-4 mr-1" />
-                      {exp.period}
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center text-dark-600 mb-4">
-                    <FiMapPin className="w-4 h-4 mr-2" />
-                    <span className="font-medium">{exp.company}</span>
-                    <span className="mx-2">•</span>
-                    <span>{exp.location}</span>
-                  </div>
-
-                  <p className="text-dark-700 mb-4 leading-relaxed font-medium">
-                    {exp.description}
-                  </p>
-
-                  <div className="space-y-2">
-                    {exp.achievements.map((achievement, idx) => (
-                      <div key={idx} className="flex items-start">
-                        <div className="w-2 h-2 bg-primary-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <span className="text-dark-600 text-sm">{achievement}</span>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
-
-        {/* Skills Grid */}
-        {activeTab === 'skills' && (
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-2 gap-8"
-          >
-            {skills.map((skillGroup, index) => (
-              <motion.div
-                key={skillGroup.category}
-                variants={itemVariants}
-                className="bg-dark-50/80 backdrop-blur-sm p-6 rounded-lg shadow-lg card-hover card-glow border border-dark-300/20"
-                whileHover={{ 
-                  scale: 1.05,
-                  rotate: 1,
-                  boxShadow: "0 10px 30px rgba(139, 92, 246, 0.2)"
-                }}
-              >
-                <div className="flex items-center mb-4">
-                  <div className="p-3 bg-primary-600/10 rounded-lg mr-4">
-                    <skillGroup.icon className="w-6 h-6 text-primary-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-dark-900">{skillGroup.category}</h3>
+        {/* Horizontal Experience Cards */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto"
+        >
+          {aiEvolutions.map((evolution, index) => (
+            <motion.div
+              key={evolution.id}
+              variants={itemVariants}
+              className="group relative rounded-2xl overflow-hidden border-2 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 bg-black/80 backdrop-blur-lg h-80"
+              style={{
+                borderColor: index === 0 ? 'rgba(0, 245, 255, 0.4)' : index === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)',
+                boxShadow: `0 10px 40px ${
+                  index === 0 ? 'rgba(0, 245, 255, 0.1)' : 
+                  index === 1 ? 'rgba(139, 92, 246, 0.1)' : 
+                  'rgba(0, 255, 135, 0.1)'
+                }`
+              }}
+              whileHover={{
+                boxShadow: `0 20px 60px ${
+                  index === 0 ? 'rgba(0, 245, 255, 0.3)' : 
+                  index === 1 ? 'rgba(139, 92, 246, 0.3)' : 
+                  'rgba(0, 255, 135, 0.3)'
+                }`
+              }}
+            >
+              {/* Header with Icon */}
+              <div className="relative h-20 overflow-hidden"
+                   style={{
+                     background: `linear-gradient(135deg, ${
+                       index === 0 ? '#00f5ff20, #8b5cf640' : 
+                       index === 1 ? '#8b5cf620, #ff008040' : 
+                       '#00ff8720, #8b5cf640'
+                     })`
+                   }}>
+                <div className="absolute inset-0 bg-black/40"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    className="w-10 h-10 rounded-full flex items-center justify-center"
+                    style={{
+                      background: `linear-gradient(135deg, ${
+                        index === 0 ? '#00f5ff, #8b5cf6' : 
+                        index === 1 ? '#8b5cf6, #ff0080' : 
+                        '#00ff87, #8b5cf6'
+                      })`,
+                      boxShadow: `0 0 20px ${
+                        index === 0 ? 'rgba(0, 245, 255, 0.6)' : 
+                        index === 1 ? 'rgba(139, 92, 246, 0.6)' : 
+                        'rgba(0, 255, 135, 0.6)'
+                      }`
+                    }}
+                  >
+                    <FiCpu className="w-5 h-5 text-white" />
+                  </motion.div>
                 </div>
                 
-                <div className="flex flex-wrap gap-2">
-                  {skillGroup.technologies.map((tech, idx) => (
-                    <motion.span
-                      key={tech}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="px-3 py-1 bg-primary-400/10 text-primary-700 rounded-full text-sm font-medium"
-                    >
-                      {tech}
-                    </motion.span>
-                  ))}
+                {/* Year Badge */}
+                <div className="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-lg"
+                     style={{
+                       backgroundColor: `${
+                         index === 0 ? 'rgba(0, 245, 255, 0.2)' :
+                         index === 1 ? 'rgba(139, 92, 246, 0.2)' :
+                         'rgba(0, 255, 135, 0.2)'
+                       }`,
+                       borderColor: `${
+                         index === 0 ? 'rgba(0, 245, 255, 0.5)' :
+                         index === 1 ? 'rgba(139, 92, 246, 0.5)' :
+                         'rgba(0, 255, 135, 0.5)'
+                       }`,
+                       color: `${
+                         index === 0 ? '#00f5ff' :
+                         index === 1 ? '#8b5cf6' :
+                         '#00ff87'
+                       }`
+                     }}>
+                  {evolution.starDate.split(' ').pop()}
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
+              </div>
+
+              {/* Content */}
+              <div className="p-4 h-60 flex flex-col">
+                <div className="text-neon-cyan font-mono text-xs mb-1">
+                  STAGE #{3 - index}
+                </div>
+                
+                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-neon-cyan transition-colors duration-300 leading-tight">
+                  {evolution.stage}
+                </h3>
+                
+                <div className="text-neon-green text-sm font-medium mb-3">
+                  {evolution.designation}
+                </div>
+
+                <p className="text-white/70 text-sm leading-relaxed mb-4 flex-1 line-clamp-4">
+                  {evolution.description}
+                </p>
+
+                {/* Key Skills */}
+                <div className="space-y-1">
+                  <div className="text-neon-cyan font-mono text-xs">KEY SKILLS:</div>
+                  <div className="flex flex-wrap gap-1">
+                    {evolution.evolutions.slice(0, 2).map((ability, idx) => (
+                      <span
+                        key={idx}
+                        className="px-2 py-1 rounded-full text-xs font-medium border"
+                        style={{
+                          backgroundColor: `${
+                            index === 0 ? 'rgba(0, 245, 255, 0.1)' : 
+                            index === 1 ? 'rgba(139, 92, 246, 0.1)' : 
+                            'rgba(0, 255, 135, 0.1)'
+                          }`,
+                          borderColor: `${
+                            index === 0 ? 'rgba(0, 245, 255, 0.3)' : 
+                            index === 1 ? 'rgba(139, 92, 246, 0.3)' : 
+                            'rgba(0, 255, 135, 0.3)'
+                          }`,
+                          color: `${
+                            index === 0 ? '#00f5ff' : 
+                            index === 1 ? '#8b5cf6' : 
+                            '#00ff87'
+                          }`
+                        }}
+                      >
+                        {ability.replace(/[🛸⚡👨‍🚀🎨🔄🔍🎯📐🚀]/g, '').trim()}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   )
