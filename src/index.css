@@ -149,6 +149,28 @@ body {
   will-change: opacity, transform;
 }
 
+/* Custom scrollbar for achievement cards */
+.achievement-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.achievement-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+}
+
+.achievement-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, var(--station-color, #00f5ff), rgba(255, 255, 255, 0.2));
+  opacity: 0.4;
+  border-radius: 2px;
+  transition: background 0.3s ease, opacity 0.3s ease;
+}
+
+.achievement-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, var(--station-color, #00f5ff), rgba(255, 255, 255, 0.4));
+  opacity: 0.6;
+}
+
 /* High-performance dust floating animation */
 @keyframes dust-float {
   0%, 100% { 

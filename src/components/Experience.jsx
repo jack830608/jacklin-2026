@@ -1,5 +1,5 @@
 import { motion, useInView } from 'framer-motion'
-import { FiCpu, FiCalendar, FiGlobe, FiZap } from 'react-icons/fi'
+import { FiCpu, FiCalendar, FiGlobe, FiZap, FiMusic, FiTarget, FiMapPin, FiMessageCircle, FiBook } from 'react-icons/fi'
 import { useState, useRef, useMemo } from 'react'
 
 const Experience = () => {
@@ -50,7 +50,8 @@ const Experience = () => {
         "Implemented Lighthouse CI in CI/CD Pipeline for automated performance audits"
       ],
       technologies: ["HTML5", "CSS3", "TypeScript", "Tailwind", "Shopify", "Node.js", "React", "Next.js", "Jest", "Playwright", "MongoDB", "AWS"],
-      color: "#00f5ff"
+      color: "#00f5ff",
+      icon: FiMusic
     },
     {
       id: 2,
@@ -69,7 +70,8 @@ const Experience = () => {
         "Optimized data pipeline performance for high-volume advertising analytics"
       ],
       technologies: ["HTML5", "CSS3", "JavaScript", "Node.js", "React", "MySQL", "Docker", "GTM", "GA", "ShellScript"],
-      color: "#8b5cf6"
+      color: "#8b5cf6",
+      icon: FiTarget
     },
     {
       id: 3,
@@ -88,7 +90,8 @@ const Experience = () => {
         "Optimized frontend architecture for improved loading speed and reliability"
       ],
       technologies: ["HTML5", "CSS3", "JavaScript", "Node.js", "React", "PostgreSQL", "GCP"],
-      color: "#00ff87"
+      color: "#00ff87",
+      icon: FiMapPin
     },
     {
       id: 4,
@@ -107,7 +110,8 @@ const Experience = () => {
         "Contributed to establishing AI-first development culture and practices"
       ],
       technologies: ["HTML5", "CSS3", "JavaScript", "Node.js", "React", "Next.js", "AWS", "PostgreSQL"],
-      color: "#ff6b35"
+      color: "#ff6b35",
+      icon: FiMessageCircle
     },
     {
       id: 5,
@@ -126,7 +130,8 @@ const Experience = () => {
         "Integrated multi-platform communication channels for seamless student experience"
       ],
       technologies: ["HTML5", "CSS3", "JavaScript", "Node.js", "MongoDB", "Angular.js (1.x)", "LineBot"],
-      color: "#ff0080"
+      color: "#ff0080",
+      icon: FiBook
     }
   ]
 
@@ -348,22 +353,44 @@ const Experience = () => {
                     <motion.div
                       className="absolute w-20 h-20 border border-dashed rounded-full"
                       style={{ 
-                        borderColor: `${station.color}30`,
+                        borderColor: `${station.color}60`,
                         left: '16px', // (112-80)/2 = 16px
-                        top: '16px'   // (112-80)/2 = 16px
+                        top: '16px',   // (112-80)/2 = 16px
+                        boxShadow: `0 0 6px ${station.color}40`
                       }}
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                      animate={{ 
+                        rotate: 360,
+                        borderColor: [
+                          `${station.color}60`,
+                          `${station.color}aa`,
+                          `${station.color}60`
+                        ]
+                      }}
+                      transition={{ 
+                        rotate: { duration: 10, repeat: Infinity, ease: "linear" },
+                        borderColor: { duration: 2, repeat: Infinity }
+                      }}
                     />
                     <motion.div
                       className="absolute w-24 h-24 border border-dashed rounded-full"
                       style={{ 
-                        borderColor: `${station.color}20`,
+                        borderColor: `${station.color}40`,
                         left: '8px',  // (112-96)/2 = 8px
-                        top: '8px'    // (112-96)/2 = 8px
+                        top: '8px',    // (112-96)/2 = 8px
+                        boxShadow: `0 0 8px ${station.color}30`
                       }}
-                      animate={{ rotate: -360 }}
-                      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                      animate={{ 
+                        rotate: -360,
+                        borderColor: [
+                          `${station.color}40`,
+                          `${station.color}80`,
+                          `${station.color}40`
+                        ]
+                      }}
+                      transition={{ 
+                        rotate: { duration: 15, repeat: Infinity, ease: "linear" },
+                        borderColor: { duration: 3, repeat: Infinity }
+                      }}
                     />
                     
                     {/* Central Hub */}
@@ -386,7 +413,7 @@ const Experience = () => {
                       transition={{ duration: 2, repeat: Infinity }}
                       whileHover={{ scale: 1.1 }}
                     >
-                      <FiCpu className="w-6 h-6" style={{ color: station.color }} />
+                      <station.icon className="w-6 h-6" style={{ color: station.color }} />
                     </motion.div>
                   </div>
                 </div>
@@ -430,7 +457,10 @@ const Experience = () => {
                     <div className="text-xs font-mono mb-2" style={{ color: station.color }}>
                       MISSION ACHIEVEMENTS:
                     </div>
-                    <div className="space-y-1 max-h-32 overflow-y-auto">
+                    <div 
+                      className="space-y-1 max-h-32 overflow-y-auto achievement-scroll" 
+                      style={{ '--station-color': station.color }}
+                    >
                       {station.achievements.map((achievement, idx) => (
                         <div key={idx} className="text-xs text-white/80 flex items-start">
                           <span className="text-neon-green mr-2 flex-shrink-0">▸</span>

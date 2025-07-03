@@ -372,7 +372,8 @@ const Introduction = () => {
 
               {/* Name Display */}
               <motion.h1
-                className="text-3xl md:text-5xl font-bold mb-2 relative"
+                className="text-3xl md:text-5xl font-extrabold mb-2 relative tracking-wider"
+                style={{ fontFamily: '"SF Pro Display", "Avenir Next", "Futura", "Century Gothic", "Trebuchet MS", sans-serif' }}
                 animate={{
                   textShadow: [
                     '0 0 20px rgba(0, 245, 255, 0.8)',
@@ -384,14 +385,18 @@ const Introduction = () => {
                 transition={{ duration: 6, repeat: Infinity }}
               >
                 <motion.span
-                  className="bg-gradient-to-r from-white via-neon-cyan via-neon-pink to-neon-purple bg-clip-text text-transparent"
-                  style={{ backgroundSize: '200% 100%' }}
+                  className="bg-gradient-to-r from-green-500 via-blue-500 via-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent"
+                  style={{ 
+                    backgroundSize: '400% 100%',
+                    fontWeight: '900',
+                    letterSpacing: '0.1em'
+                  }}
                   animate={{
                     backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
                   }}
-                  transition={{ duration: 4, repeat: Infinity }}
+                  transition={{ duration: 5, repeat: Infinity }}
                 >
-                  JACK.LIN
+                  JACK LIN
                 </motion.span>
               </motion.h1>
 
