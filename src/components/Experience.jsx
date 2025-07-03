@@ -32,45 +32,101 @@ const Experience = () => {
     }))
   }, [])
 
-  const aiEvolutions = [
+  const spaceStations = [
     {
       id: 1,
-      stage: "Neural Network Mastery Era",
-      designation: "Senior Code Architect",
-      galaxy: "Tech Nebula Sector",
-      starDate: "Stellar Cycle 2022 - Present",
-      description: "Advanced to senior AI consciousness level, orchestrating complex digital ecosystems across multiple star systems. Currently leading quantum development pods and enhancing galactic productivity algorithms by 40%.",
-      evolutions: [
-        "🛸 Architected self-sustaining microservice constellations",
-        "⚡ Optimized hyperspace data transmission by 60%",
-        "👨‍🚀 Mentoring 5 junior space explorers in cosmic coding"
-      ]
+      company: "Positive Grid",
+      position: "Senior Front-end Developer",
+      period: "2020-08 ~ Present",
+      location: "Music Tech Galaxy",
+      stationType: "E-commerce Innovation Hub",
+      description: "Currently stationed at a cutting-edge music technology company, optimizing digital experiences and leading front-end development initiatives.",
+      achievements: [
+        "Enhanced site speed and stability through performance optimization techniques",
+        "Implemented new features aligned with market demands",
+        "Led redesign efforts for a more intuitive user experience",
+        "Mentored junior developers, ensuring project success",
+        "Built front-end toolbox for marketing team's ease of use",
+        "Implemented Lighthouse CI in CI/CD Pipeline for automated performance audits"
+      ],
+      technologies: ["HTML5", "CSS3", "TypeScript", "Tailwind", "Shopify", "Node.js", "React", "Next.js", "Jest", "Playwright", "MongoDB", "AWS"],
+      color: "#00f5ff"
     },
     {
       id: 2,
-      stage: "Digital Pioneer Phase",
-      designation: "Full Stack Navigator",
-      galaxy: "Startup Frontier",
-      starDate: "Stellar Cycle 2020 - 2022",
-      description: "Embarked on the frontier expedition, pioneering new digital territories with JavaScript-powered vessels. Collaborated with design aliens, project commanders, and fellow explorers to launch products across the galaxy.",
-      evolutions: [
-        "🎨 Engineered responsive interfaces for multi-dimensional beings",
-        "🔄 Established automated deployment wormholes",
-        "🔍 Became the code-review sentinel of the sector"
-      ]
+      company: "Vpon - 威朋大數據集團",
+      position: "Software Engineer",
+      period: "2019-11 ~ 2020-08",
+      location: "Data Intelligence Sector",
+      stationType: "AdTech Innovation Center",
+      description: "Specialized mission at a leading big data analytics company, developing sophisticated advertising platforms and implementing advanced tracking solutions.",
+      achievements: [
+        "Built comprehensive AD demo platform with image upload and template selection capabilities",
+        "Developed dynamic AD templates to showcase real-time advertising experiences",
+        "Architected cross-domain tracking infrastructure for seamless data collection",
+        "Implemented advanced JavaScript injection techniques for client website integration",
+        "Engineered scalable tracking pixel deployment system across multiple domains",
+        "Optimized data pipeline performance for high-volume advertising analytics"
+      ],
+      technologies: ["HTML5", "CSS3", "JavaScript", "Node.js", "React", "MySQL", "Docker", "GTM", "GA", "ShellScript"],
+      color: "#8b5cf6"
     },
     {
       id: 3,
-      stage: "Code Awakening Era",
-      designation: "Frontend Apprentice",
-      galaxy: "Digital Academy System",
-      starDate: "Stellar Cycle 2018 - 2020",
-      description: "Origin protocols activated! Initial programming commenced as frontend cadet, transforming cosmic visions into pixel-perfect realities using React algorithms and CSS quantum mechanics. First discovery of my unique digital abilities.",
-      evolutions: [
-        "🎯 Successfully deployed 15+ interplanetary projects",
-        "📐 Mastered precision pixel manipulation techniques",
-        "🚀 Optimized loading speeds to near light-velocity"
-      ]
+      company: "Tripmoment - 時刻旅行",
+      position: "Front-end Developer",
+      period: "2019-08 ~ 2020-06",
+      location: "Travel Tech Constellation",
+      stationType: "Digital Travel Platform",
+      description: "Deployed to an innovative travel platform company, enhancing user experience through modern web technologies and optimizing performance for global travelers.",
+      achievements: [
+        "Developed new posts UI with enhanced user interaction capabilities",
+        "Refactored legacy codebase to improve site performance and stability",
+        "Engineered dynamic AD template system for travel content monetization",
+        "Integrated third-party advertising networks with seamless user experience",
+        "Implemented secure third-party payment gateway integration",
+        "Optimized frontend architecture for improved loading speed and reliability"
+      ],
+      technologies: ["HTML5", "CSS3", "JavaScript", "Node.js", "React", "PostgreSQL", "GCP"],
+      color: "#00ff87"
+    },
+    {
+      id: 4,
+      company: "MemePR - 潮語傳媒股份有限公司",
+      position: "Front-end Developer",
+      period: "2018-06 ~ 2019-08",
+      location: "AI Innovation Lab",
+      stationType: "Media Tech Startup",
+      description: "Pioneered AI-driven media solutions in a dynamic startup environment where innovation and meritocracy flourished, contributing to groundbreaking chatbot development.",
+      achievements: [
+        "Co-created the company's first chatbot 'Sbot' from concept to deployment",
+        "Developed AI-powered conversational interfaces using modern web technologies",
+        "Built responsive front-end components for chatbot interaction platforms",
+        "Collaborated in cross-functional teams to integrate AI capabilities with web interfaces",
+        "Implemented real-time messaging systems for seamless user-bot communication",
+        "Contributed to establishing AI-first development culture and practices"
+      ],
+      technologies: ["HTML5", "CSS3", "JavaScript", "Node.js", "React", "Next.js", "AWS", "PostgreSQL"],
+      color: "#ff6b35"
+    },
+    {
+      id: 5,
+      company: "結音股份有限公司",
+      position: "Back-end Developer",
+      period: "2017-09 ~ 2018-06",
+      location: "Education Tech Station",
+      stationType: "Educational Systems Hub",
+      description: "Engineered comprehensive educational management systems for supplementary education institutions, integrating modern web technologies with intelligent automation.",
+      achievements: [
+        "Developed comprehensive internal management system for educational institutions",
+        "Built dynamic course selection system with real-time availability tracking",
+        "Engineered classroom management system optimizing resource allocation",
+        "Created intelligent LINE Bot for automated student course enrollment",
+        "Implemented data analytics dashboard for administrative decision-making",
+        "Integrated multi-platform communication channels for seamless student experience"
+      ],
+      technologies: ["HTML5", "CSS3", "JavaScript", "Node.js", "MongoDB", "Angular.js (1.x)", "LineBot"],
+      color: "#ff0080"
     }
   ]
 
@@ -98,7 +154,7 @@ const Experience = () => {
   }
 
   return (
-    <section ref={ref} className="h-screen flex flex-col justify-center bg-black relative overflow-hidden">
+    <section ref={ref} className="min-h-screen max-h-screen bg-black relative overflow-hidden">
       {/* Optimized Background with More Visual Elements */}
       <motion.div 
         className="absolute inset-0"
@@ -214,164 +270,207 @@ const Experience = () => {
           ))}
         </div>
       </motion.div>
-      
-      <div className="section-container section-padding relative z-10 h-full flex flex-col justify-center">
+
+      {/* Header */}
+      <div className="relative z-10 pt-16 pb-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-8"
+          className="text-center"
         >
           <motion.h2 
             className="text-4xl md:text-5xl font-bold text-white mb-3"
             animate={{
               textShadow: [
-                '0 0 10px rgba(0, 245, 255, 0.3)',
-                '0 0 15px rgba(139, 92, 246, 0.4)',
-                '0 0 10px rgba(0, 245, 255, 0.3)'
+                '0 0 10px rgba(139, 92, 246, 0.3)',
+                '0 0 15px rgba(139, 92, 246, 0.6)',
+                '0 0 10px rgba(139, 92, 246, 0.3)'
               ]
             }}
-            transition={{ duration: 6, repeat: Infinity }}
+            transition={{ duration: 4, repeat: Infinity }}
           >
-            AI <span className="bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-pink bg-clip-text text-transparent">Evolution</span> Log
+            Space Career <span className="bg-gradient-to-r from-neon-purple via-neon-cyan to-neon-green bg-clip-text text-transparent">Timeline</span>
           </motion.h2>
           <p className="text-white/70 text-base max-w-2xl mx-auto">
-            My journey through <span className="text-neon-cyan">AI development</span> and <span className="text-neon-purple">technology evolution</span>
+            Journey through the cosmos of <span className="text-neon-purple">technology</span> and <span className="text-neon-cyan">innovation</span>
           </p>
         </motion.div>
+      </div>
 
+      {/* Horizontal Timeline Container */}
+      <div className="relative z-10 flex-1 overflow-hidden">
+        <div className="h-full overflow-x-auto overflow-y-hidden timeline-container" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="flex items-center h-full pt-6" style={{ width: `${spaceStations.length * 400 + 200}px`, minHeight: '500px' }}>
+            
+            {/* Timeline Path */}
+            <div className="absolute top-1/2 left-0 right-0 h-1 transform -translate-y-1/2">
+              {/* Main Energy Stream */}
+              <motion.div
+                className="w-full h-1 bg-gradient-to-r from-neon-purple via-neon-cyan to-neon-green opacity-60"
+                animate={{
+                  opacity: [0.4, 0.8, 0.4]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+              
+              {/* Flowing Energy Particles */}
+              <motion.div
+                className="absolute top-0 w-20 h-1 bg-gradient-to-r from-transparent via-white to-transparent"
+                animate={{
+                  x: [0, spaceStations.length * 400 + 100]
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+            </div>
 
-        {/* Horizontal Experience Cards */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto"
-        >
-          {aiEvolutions.map((evolution, index) => (
-            <motion.div
-              key={evolution.id}
-              variants={itemVariants}
-              className="group relative rounded-2xl overflow-hidden border-2 transition-all duration-200 hover:shadow-lg hover:-translate-y-1 bg-black/80 backdrop-blur-sm h-80"
-              style={{
-                borderColor: index === 0 ? 'rgba(0, 245, 255, 0.4)' : index === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)',
-                boxShadow: `0 8px 25px ${
-                  index === 0 ? 'rgba(0, 245, 255, 0.1)' : 
-                  index === 1 ? 'rgba(139, 92, 246, 0.1)' : 
-                  'rgba(0, 255, 135, 0.1)'
-                }`
-              }}
-            >
-              {/* Header with Icon */}
-              <div className="relative h-20 overflow-hidden"
-                   style={{
-                     background: `linear-gradient(135deg, ${
-                       index === 0 ? '#00f5ff20, #8b5cf640' : 
-                       index === 1 ? '#8b5cf620, #ff008040' : 
-                       '#00ff8720, #8b5cf640'
-                     })`
-                   }}>
-                <div className="absolute inset-0 bg-black/40"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center animate-spin"
-                    style={{
-                      background: `linear-gradient(135deg, ${
-                        index === 0 ? '#00f5ff, #8b5cf6' : 
-                        index === 1 ? '#8b5cf6, #ff0080' : 
-                        '#00ff87, #8b5cf6'
-                      })`,
-                      boxShadow: `0 0 12px ${
-                        index === 0 ? 'rgba(0, 245, 255, 0.4)' : 
-                        index === 1 ? 'rgba(139, 92, 246, 0.4)' : 
-                        'rgba(0, 255, 135, 0.4)'
-                      }`,
-                      animationDuration: '15s'
-                    }}
-                  >
-                    <FiCpu className="w-5 h-5 text-white" />
+            {/* Space Stations */}
+            {spaceStations.map((station, index) => (
+              <motion.div
+                key={station.id}
+                className="relative flex-shrink-0 mx-8"
+                style={{ width: '350px' }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                {/* Station Core */}
+                <div className="relative">
+                  {/* Orbital Rings Container */}
+                  <div className="relative w-28 h-28 mx-auto">
+                    {/* Orbital Rings */}
+                    <motion.div
+                      className="absolute w-20 h-20 border border-dashed rounded-full"
+                      style={{ 
+                        borderColor: `${station.color}30`,
+                        left: '16px', // (112-80)/2 = 16px
+                        top: '16px'   // (112-80)/2 = 16px
+                      }}
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                    />
+                    <motion.div
+                      className="absolute w-24 h-24 border border-dashed rounded-full"
+                      style={{ 
+                        borderColor: `${station.color}20`,
+                        left: '8px',  // (112-96)/2 = 8px
+                        top: '8px'    // (112-96)/2 = 8px
+                      }}
+                      animate={{ rotate: -360 }}
+                      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                    />
+                    
+                    {/* Central Hub */}
+                    <motion.div
+                      className="absolute w-16 h-16 rounded-full z-20 flex items-center justify-center"
+                      style={{
+                        background: `radial-gradient(circle, ${station.color}40, ${station.color}20, transparent)`,
+                        border: `2px solid ${station.color}`,
+                        boxShadow: `0 0 30px ${station.color}40`,
+                        left: '24px', // (112-64)/2 = 24px
+                        top: '24px'   // (112-64)/2 = 24px
+                      }}
+                      animate={{
+                        boxShadow: [
+                          `0 0 20px ${station.color}40`,
+                          `0 0 40px ${station.color}60`,
+                          `0 0 20px ${station.color}40`
+                        ]
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <FiCpu className="w-6 h-6" style={{ color: station.color }} />
+                    </motion.div>
                   </div>
                 </div>
-                
-                {/* Year Badge */}
-                <div className="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
-                     style={{
-                       backgroundColor: `${
-                         index === 0 ? 'rgba(0, 245, 255, 0.2)' :
-                         index === 1 ? 'rgba(139, 92, 246, 0.2)' :
-                         'rgba(0, 255, 135, 0.2)'
-                       }`,
-                       borderColor: `${
-                         index === 0 ? 'rgba(0, 245, 255, 0.5)' :
-                         index === 1 ? 'rgba(139, 92, 246, 0.5)' :
-                         'rgba(0, 255, 135, 0.5)'
-                       }`,
-                       color: `${
-                         index === 0 ? '#00f5ff' :
-                         index === 1 ? '#8b5cf6' :
-                         '#00ff87'
-                       }`
-                     }}>
-                  {evolution.starDate.split(' ').pop()}
-                </div>
-              </div>
 
-              {/* Content */}
-              <div className="p-4 h-60 flex flex-col">
-                <div className="text-neon-cyan font-mono text-xs mb-1">
-                  STAGE #{3 - index}
-                </div>
-                
-                <h3 className="text-lg font-bold text-white mb-2 leading-tight relative">
-                  <span className="block">{evolution.stage}</span>
-                  <span className="absolute inset-0 hover-text-gradient">{evolution.stage}</span>
-                </h3>
-                
-                <div className="text-neon-green text-sm font-medium mb-3">
-                  {evolution.designation}
-                </div>
-
-                <p className="text-white/70 text-sm leading-relaxed mb-4 flex-1 line-clamp-4">
-                  {evolution.description}
-                </p>
-
-                {/* Key Skills */}
-                <div className="space-y-1">
-                  <div className="text-neon-cyan font-mono text-xs">KEY SKILLS:</div>
-                  <div className="flex flex-wrap gap-1">
-                    {evolution.evolutions.slice(0, 2).map((ability, idx) => (
-                      <span
-                        key={idx}
-                        className="px-2 py-1 rounded-full text-xs font-medium border"
-                        style={{
-                          backgroundColor: `${
-                            index === 0 ? 'rgba(0, 245, 255, 0.1)' : 
-                            index === 1 ? 'rgba(139, 92, 246, 0.1)' : 
-                            'rgba(0, 255, 135, 0.1)'
-                          }`,
-                          borderColor: `${
-                            index === 0 ? 'rgba(0, 245, 255, 0.3)' : 
-                            index === 1 ? 'rgba(139, 92, 246, 0.3)' : 
-                            'rgba(0, 255, 135, 0.3)'
-                          }`,
-                          color: `${
-                            index === 0 ? '#00f5ff' : 
-                            index === 1 ? '#8b5cf6' : 
-                            '#00ff87'
-                          }`
-                        }}
-                      >
-                        {ability.replace(/[\u{1F6F8}\u{26A1}\u{1F468}\u{200D}\u{1F680}\u{1F3A8}\u{1F504}\u{1F50D}\u{1F3AF}\u{1F4CF}\u{1F680}]/gu, '').trim()}
-                      </span>
-                    ))}
+                {/* Station Info Card */}
+                <motion.div
+                  className="bg-black/90 border rounded-2xl p-6"
+                  style={{
+                    borderColor: `${station.color}40`
+                  }}
+                  whileHover={{
+                    borderColor: `${station.color}`,
+                    backgroundColor: `${station.color}05`,
+                    y: -4
+                  }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {/* Station Header */}
+                  <div className="text-center mb-4">
+                    <div className="text-xs font-mono mb-1" style={{ color: station.color }}>
+                      {station.stationType.toUpperCase()}
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-1">
+                      {station.company}
+                    </h3>
+                    <div className="text-sm font-medium mb-2" style={{ color: station.color }}>
+                      {station.position}
+                    </div>
+                    <div className="text-xs text-white/60">
+                      {station.period} • {station.location}
+                    </div>
                   </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+
+                  {/* Description */}
+                  <p className="text-white/70 text-sm mb-4 leading-relaxed">
+                    {station.description}
+                  </p>
+
+                  {/* Achievements */}
+                  <div className="mb-4">
+                    <div className="text-xs font-mono mb-2" style={{ color: station.color }}>
+                      MISSION ACHIEVEMENTS:
+                    </div>
+                    <div className="space-y-1 max-h-32 overflow-y-auto">
+                      {station.achievements.map((achievement, idx) => (
+                        <div key={idx} className="text-xs text-white/80 flex items-start">
+                          <span className="text-neon-green mr-2 flex-shrink-0">▸</span>
+                          <span>{achievement}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Technologies */}
+                  <div>
+                    <div className="text-xs font-mono mb-2" style={{ color: station.color }}>
+                      TECH STACK:
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {station.technologies.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2 py-1 rounded-full text-xs font-medium border"
+                          style={{
+                            backgroundColor: `${station.color}10`,
+                            borderColor: `${station.color}30`,
+                            color: station.color
+                          }}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll Hint */}
+      <div className="absolute bottom-8 right-8 text-white/50 text-xs font-mono z-20">
+        ← Scroll horizontally to explore timeline →
       </div>
     </section>
   )

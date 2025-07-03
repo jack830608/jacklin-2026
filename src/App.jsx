@@ -27,16 +27,22 @@ function App() {
   const handleWheel = useCallback((e) => {
     if (isScrolling) return
     
-    e.preventDefault()
+    // Check if horizontal scroll is dominant - if so, don't trigger section changes
+    const isHorizontalScroll = Math.abs(e.deltaX) > Math.abs(e.deltaY)
     
-    const newSection = e.deltaY > 0 
-      ? Math.min(currentSection + 1, sections.length - 1)
-      : Math.max(currentSection - 1, 0)
-    
-    if (newSection !== currentSection) {
-      setIsScrolling(true)
-      setCurrentSection(newSection)
-      setTimeout(() => setIsScrolling(false), 1000)
+    // Only prevent default and trigger section changes for vertical scroll
+    if (!isHorizontalScroll && Math.abs(e.deltaY) > 10) {
+      e.preventDefault()
+      
+      const newSection = e.deltaY > 0 
+        ? Math.min(currentSection + 1, sections.length - 1)
+        : Math.max(currentSection - 1, 0)
+      
+      if (newSection !== currentSection) {
+        setIsScrolling(true)
+        setCurrentSection(newSection)
+        setTimeout(() => setIsScrolling(false), 1000)
+      }
     }
   }, [currentSection, isScrolling, sections.length])
 
