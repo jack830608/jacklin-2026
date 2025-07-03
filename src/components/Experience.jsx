@@ -460,6 +460,7 @@ const Experience = () => {
                     <div 
                       className="space-y-1 max-h-32 overflow-y-auto achievement-scroll" 
                       style={{ '--station-color': station.color }}
+                      onWheel={(e) => e.stopPropagation()}
                     >
                       {station.achievements.map((achievement, idx) => (
                         <div key={idx} className="text-xs text-white/80 flex items-start">
