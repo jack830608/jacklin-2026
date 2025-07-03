@@ -276,8 +276,9 @@ const Experience = () => {
         </div>
       </motion.div>
 
-      {/* Header */}
-      <div className="relative z-10 pt-16 pb-8">
+      {/* Header and Timeline Container */}
+      <div className="relative z-10 h-screen flex flex-col space-y-8 justify-center overflow-hidden">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -302,12 +303,11 @@ const Experience = () => {
             Journey through the cosmos of <span className="text-neon-purple">technology</span> and <span className="text-neon-cyan">innovation</span>
           </p>
         </motion.div>
-      </div>
 
-      {/* Horizontal Timeline Container */}
-      <div className="relative z-10 flex-1 overflow-hidden">
-        <div className="h-full overflow-x-auto overflow-y-hidden timeline-container" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          <div className="flex items-center h-full pt-6" style={{ width: `${spaceStations.length * 400 + 200}px`, minHeight: '500px' }}>
+        {/* Horizontal Timeline Container */}
+        <div className="overflow-hidden flex-shrink-0">
+          <div className="overflow-x-auto overflow-y-hidden timeline-container" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <div className="flex items-center" style={{ width: `${spaceStations.length * 400 + 200}px`, minHeight: '400px' }}>
             
             {/* Timeline Path */}
             <div className="absolute top-1/2 left-0 right-0 h-1 transform -translate-y-1/2">
@@ -420,9 +420,10 @@ const Experience = () => {
 
                 {/* Station Info Card */}
                 <motion.div
-                  className="bg-black/90 border rounded-2xl p-6"
+                  className="bg-black/90 border rounded-2xl p-6 font-mono"
                   style={{
-                    borderColor: `${station.color}40`
+                    borderColor: `${station.color}40`,
+                    fontFamily: '"Courier New", "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Source Code Pro", Consolas, "Ubuntu Mono", monospace'
                   }}
                   whileHover={{
                     borderColor: `${station.color}`,
@@ -443,7 +444,7 @@ const Experience = () => {
                       {station.position}
                     </div>
                     <div className="text-xs text-white/60">
-                      {station.period} • {station.location}
+                      {station.period}
                     </div>
                   </div>
 
@@ -495,14 +496,11 @@ const Experience = () => {
                 </motion.div>
               </motion.div>
             ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Scroll Hint */}
-      <div className="absolute bottom-8 right-8 text-white/50 text-xs font-mono z-20">
-        ← Scroll horizontally to explore timeline →
-      </div>
     </section>
   )
 }
