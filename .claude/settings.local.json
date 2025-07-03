@@ -5,7 +5,10 @@
       "Bash(grep:*)",
       "Bash(npm run build:*)",
       "Bash(pkill:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run lint:*)",
+      "Bash(lsof:*)"
     ],
     "deny": []
   }

@@ -21,13 +21,23 @@ const MouseFollower = () => {
     }
 
     const handleMouseEnter = (e) => {
-      if (e.target.matches('button, a[href], .interactive-hover')) {
+      const target = e.target
+      if (target && (
+        target.tagName === 'BUTTON' ||
+        target.tagName === 'A' ||
+        target.classList?.contains('interactive-hover')
+      )) {
         setIsHovering(true)
       }
     }
 
     const handleMouseLeave = (e) => {
-      if (e.target.matches('button, a[href], .interactive-hover')) {
+      const target = e.target
+      if (target && (
+        target.tagName === 'BUTTON' ||
+        target.tagName === 'A' ||
+        target.classList?.contains('interactive-hover')
+      )) {
         setIsHovering(false)
       }
     }

@@ -8,7 +8,7 @@ const Introduction = () => {
   
   // Pre-generate star data to avoid re-calculation on every render
   const [starData] = useState(() => {
-    return [...Array(150)].map((_, i) => ({
+    return [...Array(120)].map((_, i) => ({
       id: i,
       size: Math.random(),
       brightness: Math.random(),
@@ -21,7 +21,7 @@ const Introduction = () => {
   
   // Pre-generate cosmic dust data
   const [cosmicDustData] = useState(() => {
-    return [...Array(40)].map((_, i) => ({
+    return [...Array(15)].map((_, i) => ({
       id: i,
       left: Math.random() * 100,
       top: Math.random() * 100,
@@ -41,10 +41,9 @@ const Introduction = () => {
     return [
       { x: 80, y: 20, size: 30 },
       { x: 15, y: 75, size: 25 },
-      { x: 45, y: 85, size: 20 },
-    ].map((cluster, index) => ({
+    ].map((cluster) => ({
       ...cluster,
-      stars: [...Array(8)].map((_, i) => ({
+      stars: [...Array(5)].map((_, i) => ({
         id: i,
         left: Math.cos(i * 45 * Math.PI / 180) * (Math.random() * 15 + 8) + cluster.size/2,
         top: Math.sin(i * 45 * Math.PI / 180) * (Math.random() * 15 + 8) + cluster.size/2,
@@ -90,14 +89,6 @@ const Introduction = () => {
     },
   }
 
-  const floatingAnimation = {
-    y: [0, -10, 0],
-    transition: {
-      duration: 3,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-  }
 
   return (
     <section className="h-screen flex items-center justify-center relative overflow-hidden bg-black">
@@ -164,33 +155,26 @@ const Introduction = () => {
           />
         ))}
         
-        {/* Dense Star Field */}
+        {/* Dense Star Field - Optimized */}
         {starData.map((star) => (
-          <motion.div
+          <div
             key={`bg-star-${star.id}`}
-            className="absolute rounded-full bg-white"
+            className="absolute rounded-full bg-white star-twinkle"
             style={{
               left: `${star.left}%`,
               top: `${star.top}%`,
               width: star.size > 0.95 ? '3px' : star.size > 0.8 ? '2px' : '1px',
               height: star.size > 0.95 ? '3px' : star.size > 0.8 ? '2px' : '1px',
               opacity: star.brightness * 0.7 + 0.3,
-              boxShadow: star.size > 0.9 ? `0 0 ${star.size * 6}px white` : 'none'
-            }}
-            animate={{
-              opacity: [star.brightness * 0.7 + 0.3, star.brightness * 0.3 + 0.7, star.brightness * 0.7 + 0.3],
-              scale: star.size > 0.9 ? [1, 1.2, 1] : [1, 1.05, 1]
-            }}
-            transition={{
-              duration: star.duration,
-              repeat: Infinity,
-              delay: star.delay,
-              ease: "easeInOut"
+              boxShadow: star.size > 0.9 ? `0 0 ${star.size * 6}px white` : 'none',
+              animationDelay: `${star.delay}s`,
+              animationDuration: `${star.duration}s`,
+              willChange: 'opacity, transform'
             }}
           />
         ))}
         
-        {/* Bright Stars with Cross Pattern */}
+        {/* Bright Stars with Cross Pattern - Optimized */}
         {[
           { x: 10, y: 30, color: '#00f5ff' },
           { x: 90, y: 50, color: '#ffd700' },
@@ -198,33 +182,28 @@ const Introduction = () => {
           { x: 70, y: 90, color: '#98fb98' },
           { x: 50, y: 25, color: '#ff6b35' },
         ].map((star, index) => (
-          <motion.div
+          <div
             key={`bg-bright-star-${index}`}
-            className="absolute opacity-60"
+            className="absolute opacity-60 bright-star-pulse"
             style={{
               left: `${star.x}%`,
               top: `${star.y}%`,
-              transform: 'translate(-50%, -50%)'
+              transform: 'translate(-50%, -50%)',
+              animationDelay: `${index * 0.6}s`,
+              '--star-color': star.color,
+              willChange: 'transform'
             }}
           >
             {/* Star center */}
-            <motion.div
+            <div
               className="absolute w-1.5 h-1.5 rounded-full"
               style={{
                 background: star.color,
                 boxShadow: `0 0 15px ${star.color}`
               }}
-              animate={{
-                boxShadow: [
-                  `0 0 15px ${star.color}`,
-                  `0 0 25px ${star.color}`,
-                  `0 0 15px ${star.color}`
-                ]
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
             />
             {/* Cross rays */}
-            <motion.div
+            <div
               className="absolute w-6 h-0.5"
               style={{
                 background: `linear-gradient(to right, transparent, ${star.color}, transparent)`,
@@ -232,13 +211,8 @@ const Introduction = () => {
                 top: '50%',
                 transform: 'translateY(-50%)'
               }}
-              animate={{
-                opacity: [0.4, 0.8, 0.4],
-                scaleX: [0.7, 1.1, 0.7]
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
             />
-            <motion.div
+            <div
               className="absolute w-0.5 h-6"
               style={{
                 background: `linear-gradient(to bottom, transparent, ${star.color}, transparent)`,
@@ -246,83 +220,84 @@ const Introduction = () => {
                 top: '-50%',
                 transform: 'translateX(-50%)'
               }}
-              animate={{
-                opacity: [0.4, 0.8, 0.4],
-                scaleY: [0.7, 1.1, 0.7]
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
             />
-          </motion.div>
+          </div>
         ))}
         
-        {/* Cosmic Dust Clouds */}
+        {/* Cosmic Dust Clouds - Optimized */}
         {cosmicDustData.map((dust) => (
-          <motion.div
+          <div
             key={`cosmic-dust-${dust.id}`}
-            className="absolute rounded-full"
+            className="absolute rounded-full dust-float"
             style={{
               left: `${dust.left}%`,
               top: `${dust.top}%`,
               width: `${dust.width}px`,
               height: `${dust.height}px`,
               background: `rgba(${dust.red}, ${dust.green}, 255, 0.15)`,
-              filter: 'blur(1px)'
-            }}
-            animate={{
-              x: [0, dust.moveX, 0],
-              y: [0, dust.moveY, 0],
-              opacity: [0.05, 0.2, 0.05]
-            }}
-            transition={{
-              duration: dust.duration,
-              repeat: Infinity,
-              delay: dust.delay,
-              ease: "easeInOut"
+              animationDelay: `${dust.delay}s`,
+              animationDuration: `${dust.duration}s`,
+              '--move-x': `${dust.moveX}px`,
+              '--move-y': `${dust.moveY}px`,
+              willChange: 'transform, opacity'
             }}
           />
         ))}
         
-        {/* Distant Star Clusters */}
-        {starClusterData.map((cluster, index) => (
+        {/* Floating Code Particles */}
+        {[...Array(6)].map((_, i) => (
           <motion.div
+            key={`code-particle-${i}`}
+            className="absolute text-neon-cyan/20 font-mono text-xs pointer-events-none"
+            style={{
+              left: `${10 + i * 15}%`,
+              top: `${20 + Math.random() * 60}%`,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.1, 0.3, 0.1],
+              rotate: [0, 360]
+            }}
+            transition={{
+              duration: 8 + i * 2,
+              repeat: Infinity,
+              delay: i * 1.5,
+              ease: "easeInOut"
+            }}
+          >
+            {['{}', '<>', '[]', '()', '//', '&&'][i]}
+          </motion.div>
+        ))}
+        
+        {/* Distant Star Clusters - Optimized */}
+        {starClusterData.map((cluster, index) => (
+          <div
             key={`star-cluster-${index}`}
-            className="absolute opacity-50"
+            className="absolute opacity-50 cluster-rotate"
             style={{
               left: `${cluster.x}%`,
               top: `${cluster.y}%`,
               width: `${cluster.size}px`,
               height: `${cluster.size}px`,
-              transform: 'translate(-50%, -50%)'
-            }}
-            animate={{
-              rotate: [0, 360],
-              scale: [1, 1.05, 1]
-            }}
-            transition={{
-              rotate: { duration: 120 + index * 30, repeat: Infinity, ease: "linear" },
-              scale: { duration: 8, repeat: Infinity }
+              transform: 'translate(-50%, -50%)',
+              animationDuration: `${120 + index * 30}s`,
+              willChange: 'transform'
             }}
           >
             {cluster.stars.map((star) => (
-              <motion.div
+              <div
                 key={`cluster-star-${star.id}`}
-                className="absolute w-0.5 h-0.5 bg-white rounded-full"
+                className="absolute w-0.5 h-0.5 bg-white rounded-full cluster-star-twinkle"
                 style={{
                   left: `${star.left}px`,
                   top: `${star.top}px`,
-                  boxShadow: '0 0 2px white'
-                }}
-                animate={{
-                  opacity: [0.3, 0.8, 0.3]
-                }}
-                transition={{
-                  duration: star.duration,
-                  repeat: Infinity,
-                  delay: star.id * 0.2
+                  boxShadow: '0 0 2px white',
+                  animationDelay: `${star.id * 0.2}s`,
+                  animationDuration: `${star.duration}s`
                 }}
               />
             ))}
-          </motion.div>
+          </div>
         ))}
       </div>
 
@@ -341,15 +316,7 @@ const Introduction = () => {
             className="relative mb-6"
           >
             <motion.div 
-              className="bg-black/70 backdrop-blur-lg border border-neon-cyan/30 rounded-lg px-3 py-2 font-mono text-xs inline-block"
-              animate={{
-                borderColor: [
-                  'rgba(0, 245, 255, 0.3)',
-                  'rgba(0, 245, 255, 0.6)',
-                  'rgba(0, 245, 255, 0.3)'
-                ]
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
+              className="bg-black/85 border border-neon-cyan/30 rounded-lg px-3 py-2 font-mono text-xs inline-block"
             >
               <span className="text-neon-green">INCOMING TRANSMISSION...</span>
               <motion.span
@@ -369,19 +336,27 @@ const Introduction = () => {
           >
             {/* Main Identity Display */}
             <motion.div 
-              className="relative bg-black/80 backdrop-blur-lg border-2 border-neon-cyan/40 rounded-xl p-8 font-mono overflow-hidden"
+              className="relative bg-black/90 border-2 border-neon-cyan/40 rounded-xl p-8 font-mono overflow-hidden"
               animate={{
-                boxShadow: [
-                  '0 0 20px rgba(0, 245, 255, 0.3)',
-                  '0 0 40px rgba(0, 245, 255, 0.5)',
-                  '0 0 20px rgba(0, 245, 255, 0.3)'
+                borderColor: [
+                  'rgba(0, 245, 255, 0.4)',
+                  'rgba(0, 245, 255, 0.6)',
+                  'rgba(0, 245, 255, 0.4)'
                 ]
               }}
-              transition={{ duration: 4, repeat: Infinity }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             >
               {/* Header */}
               <div className="flex items-center justify-between mb-3">
-                <span className="text-neon-green text-xs tracking-wider">IDENTITY_MATRIX.exe</span>
+                <motion.span 
+                  className="text-neon-green text-xs tracking-wider"
+                  animate={{
+                    opacity: [0.7, 1, 0.7]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  IDENTITY_MATRIX.exe
+                </motion.span>
                 <motion.div 
                   className="flex space-x-1"
                   animate={{
@@ -454,6 +429,23 @@ const Introduction = () => {
                   ease: "easeInOut"
                 }}
               />
+              
+              {/* Floating scan lines */}
+              <motion.div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: 'linear-gradient(90deg, transparent 0%, rgba(0, 245, 255, 0.1) 50%, transparent 100%)',
+                  width: '30%'
+                }}
+                animate={{
+                  x: ['-30%', '130%']
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
             </motion.div>
           </motion.div>
 
@@ -463,22 +455,16 @@ const Introduction = () => {
             className="relative mb-6"
           >
             <motion.div 
-              className="bg-black/80 backdrop-blur-lg border-2 border-neon-cyan/40 rounded-xl p-8 font-mono"
+              className="bg-black/90 border-2 border-neon-cyan/40 rounded-xl p-8 font-mono relative overflow-hidden"
               animate={{
                 borderColor: [
                   'rgba(0, 245, 255, 0.4)',
-                  'rgba(139, 92, 246, 0.6)',
-                  'rgba(0, 255, 135, 0.5)',
+                  'rgba(139, 92, 246, 0.5)',
+                  'rgba(0, 255, 135, 0.4)',
                   'rgba(0, 245, 255, 0.4)'
-                ],
-                boxShadow: [
-                  '0 0 20px rgba(0, 245, 255, 0.3)',
-                  '0 0 30px rgba(139, 92, 246, 0.4)',
-                  '0 0 25px rgba(0, 255, 135, 0.3)',
-                  '0 0 20px rgba(0, 245, 255, 0.3)'
                 ]
               }}
-              transition={{ duration: 6, repeat: Infinity }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             >
               {/* Terminal Header */}
               <div className="flex items-center justify-between mb-4">
@@ -540,99 +526,20 @@ const Introduction = () => {
 
               {/* Communication Interface */}
               <div>
-                <div className="text-neon-cyan text-xs mb-3">COMMUNICATION_INTERFACE:</div>
-                
-                {/* Contact Button */}
-                <motion.a
-                  href="mailto:jack830608@gmail.com"
-                  className="relative block w-full p-2.5 rounded-lg text-white font-bold text-sm overflow-hidden group border-2 bg-black/40 backdrop-blur-lg mb-3"
-                  whileHover={{ 
-                    scale: 1.02,
-                    y: -1
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  animate={{
-                    borderColor: [
-                      'rgba(0, 245, 255, 0.6)',
-                      'rgba(255, 0, 128, 0.6)',
-                      'rgba(0, 245, 255, 0.6)'
-                    ],
-                    boxShadow: [
-                      '0 0 15px rgba(0, 245, 255, 0.3)',
-                      '0 0 25px rgba(255, 0, 128, 0.4)',
-                      '0 0 15px rgba(0, 245, 255, 0.3)'
-                    ]
-                  }}
-                  transition={{
-                    borderColor: { duration: 3, repeat: Infinity },
-                    boxShadow: { duration: 3, repeat: Infinity }
-                  }}
-                >
-                  {/* Scanning Lines Effect */}
-                  <motion.div
-                    className="absolute inset-0 overflow-hidden rounded-lg"
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-neon-cyan/20 to-transparent"
-                      animate={{
-                        x: ['-100%', '100%']
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: "linear"
-                      }}
-                    />
-                  </motion.div>
-                  
-                  {/* Button Content */}
-                  <div className="relative z-10 flex items-center justify-center space-x-3 tracking-wider">
-                    <motion.span
-                      animate={{
-                        textShadow: [
-                          '0 0 8px rgba(0, 245, 255, 0.8)',
-                          '0 0 15px rgba(0, 245, 255, 1)',
-                          '0 0 8px rgba(0, 245, 255, 0.8)'
-                        ]
-                      }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    >
-                      ⚡
-                    </motion.span>
-                    <span className="text-neon-cyan">
-                      ESTABLISH CONTACT
-                    </span>
-                    <motion.span
-                      animate={{
-                        textShadow: [
-                          '0 0 8px rgba(0, 245, 255, 0.8)',
-                          '0 0 15px rgba(0, 245, 255, 1)',
-                          '0 0 8px rgba(0, 245, 255, 0.8)'
-                        ]
-                      }}
-                      transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                    >
-                      📡
-                    </motion.span>
-                  </div>
-                </motion.a>
-                
                 {/* Network Links */}
-                <div className="h-12">
-                  <div className="text-neon-purple text-xs mb-1">QUANTUM_LINKS:</div>
+                <div>
+                  <div className="text-neon-cyan text-xs mb-3">CONTACT & LINKS:</div>
                   <div className="flex justify-center lg:justify-start space-x-3">
                     {[
+                      { icon: FiMail, href: "mailto:jack830608@gmail.com", label: "EMAIL_CONTACT", color: "neon-pink" },
                       { icon: FiGithub, href: "https://github.com/jack830608", label: "GITHUB_PORTAL", color: "neon-cyan" },
                       { icon: FiLinkedin, href: "https://www.linkedin.com/in/jack1in", label: "LINKEDIN_NODE", color: "neon-purple" },
                     ].map((social, index) => (
                       <motion.a
                         key={social.label}
                         href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        target={social.href.startsWith('mailto:') ? '_self' : '_blank'}
+                        rel={social.href.startsWith('mailto:') ? undefined : "noopener noreferrer"}
                         className="relative group"
                         whileHover={{ 
                           scale: 1.1,
@@ -642,27 +549,33 @@ const Introduction = () => {
                         transition={{ type: "spring", stiffness: 200, damping: 15 }}
                       >
                         <motion.div
-                          className={`relative p-2.5 bg-black/40 backdrop-blur-sm rounded-lg border-2 transition-all duration-300`}
+                          className={`relative p-2.5 bg-black/60 rounded-lg border-2 transition-all duration-300`}
+                          whileHover={{
+                            scale: 1.05,
+                            rotate: [0, -1, 1, 0],
+                            borderColor: social.color === "neon-cyan" 
+                              ? 'rgba(0, 245, 255, 0.8)' 
+                              : social.color === "neon-pink"
+                              ? 'rgba(255, 0, 128, 0.8)'
+                              : 'rgba(139, 92, 246, 0.8)'
+                          }}
+                          transition={{ type: "spring", stiffness: 400, damping: 20 }}
                           style={{
-                            borderColor: social.color === "neon-cyan" ? 'rgba(0, 245, 255, 0.5)' : 'rgba(139, 92, 246, 0.5)'
+                            borderColor: social.color === "neon-cyan" 
+                              ? 'rgba(0, 245, 255, 0.5)' 
+                              : social.color === "neon-pink"
+                              ? 'rgba(255, 0, 128, 0.5)'
+                              : 'rgba(139, 92, 246, 0.5)'
                           }}
-                          animate={{
-                            boxShadow: [
-                              social.color === "neon-cyan" 
-                                ? '0 0 8px rgba(0, 245, 255, 0.3)'
-                                : '0 0 8px rgba(139, 92, 246, 0.3)',
-                              social.color === "neon-cyan" 
-                                ? '0 0 15px rgba(0, 245, 255, 0.6)'
-                                : '0 0 15px rgba(139, 92, 246, 0.6)',
-                              social.color === "neon-cyan" 
-                                ? '0 0 8px rgba(0, 245, 255, 0.3)'
-                                : '0 0 8px rgba(139, 92, 246, 0.3)'
-                            ]
-                          }}
-                          transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
                         >
                           <social.icon 
-                            className={`w-4 h-4 ${social.color === "neon-cyan" ? "text-neon-cyan" : "text-neon-purple"}`}
+                            className={`w-4 h-4 ${
+                              social.color === "neon-cyan" 
+                                ? "text-neon-cyan" 
+                                : social.color === "neon-pink"
+                                ? "text-neon-pink"
+                                : "text-neon-purple"
+                            }`}
                           />
                           
                           {/* Tooltip */}
@@ -679,6 +592,19 @@ const Introduction = () => {
                   </div>
                 </div>
               </div>
+              
+              {/* Data stream effect */}
+              <motion.div
+                className="absolute top-0 right-0 h-full w-1 bg-gradient-to-b from-transparent via-neon-green/30 to-transparent"
+                animate={{
+                  y: ['-100%', '100%']
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
               
               {/* Status Indicator */}
               <motion.div
@@ -711,18 +637,9 @@ const Introduction = () => {
                   background: 'radial-gradient(circle at 30% 30%, #fff700, #ffd700, #ff8c00)',
                   boxShadow: '0 0 40px #ffd700, 0 0 80px #ff8c00',
                 }}
-                animate={{
-                  boxShadow: [
-                    '0 0 40px #ffd700, 0 0 80px #ff8c00',
-                    '0 0 60px #ffd700, 0 0 120px #ff8c00',
-                    '0 0 40px #ffd700, 0 0 80px #ff8c00'
-                  ],
-                  scale: [1, 1.05, 1]
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
               />
               
-              {/* Planets with Clear Separation */}
+              {/* Planets with Clear Separation - Optimized */}
               {[
                 { distance: 50, size: 6, color: '#c0c0c0', speed: 8, name: 'Mercury', startAngle: 0 },
                 { distance: 70, size: 8, color: '#ffc649', speed: 12, name: 'Venus', startAngle: 60 },
@@ -737,33 +654,22 @@ const Introduction = () => {
                 return (
                   <div key={`planet-${index}`} className="absolute">
                     {/* Orbit Ring */}
-                    <motion.div
-                      className="absolute border border-white/15 rounded-full"
+                    <div
+                      className="absolute border border-white/15 rounded-full orbit-pulse"
                       style={{
                         width: `${planet.distance * 2}px`,
                         height: `${planet.distance * 2}px`,
                         left: `${orbitCenterX - planet.distance}px`,
                         top: `${orbitCenterY - planet.distance}px`,
-                        borderStyle: 'dotted'
-                      }}
-                      animate={{
-                        opacity: [0.1, 0.3, 0.1],
-                        borderColor: [
-                          'rgba(255, 255, 255, 0.1)',
-                          `${planet.color}40`,
-                          'rgba(255, 255, 255, 0.1)'
-                        ]
-                      }}
-                      transition={{
-                        duration: 6,
-                        repeat: Infinity,
-                        delay: index * 0.5
+                        borderStyle: 'dotted',
+                        animationDelay: `${index * 0.5}s`,
+                        '--orbit-color': planet.color
                       }}
                     />
                     
                     {/* Planet */}
-                    <motion.div
-                      className="absolute rounded-full z-10"
+                    <div
+                      className="absolute rounded-full z-10 planet-orbit"
                       style={{
                         width: `${planet.size}px`,
                         height: `${planet.size}px`,
@@ -771,34 +677,10 @@ const Introduction = () => {
                         boxShadow: `0 0 ${planet.size * 2}px ${planet.color}99, 0 0 ${planet.size * 3}px ${planet.color}44`,
                         left: `${orbitCenterX - planet.size/2}px`,
                         top: `${orbitCenterY - planet.size/2}px`,
-                      }}
-                      animate={{
-                        x: [
-                          Math.cos((planet.startAngle * Math.PI) / 180) * planet.distance,
-                          Math.cos(((planet.startAngle + 90) * Math.PI) / 180) * planet.distance,
-                          Math.cos(((planet.startAngle + 180) * Math.PI) / 180) * planet.distance,
-                          Math.cos(((planet.startAngle + 270) * Math.PI) / 180) * planet.distance,
-                          Math.cos((planet.startAngle * Math.PI) / 180) * planet.distance,
-                        ],
-                        y: [
-                          Math.sin((planet.startAngle * Math.PI) / 180) * planet.distance,
-                          Math.sin(((planet.startAngle + 90) * Math.PI) / 180) * planet.distance,
-                          Math.sin(((planet.startAngle + 180) * Math.PI) / 180) * planet.distance,
-                          Math.sin(((planet.startAngle + 270) * Math.PI) / 180) * planet.distance,
-                          Math.sin((planet.startAngle * Math.PI) / 180) * planet.distance,
-                        ],
-                        rotate: [0, 360],
-                        boxShadow: [
-                          `0 0 ${planet.size * 2}px ${planet.color}99, 0 0 ${planet.size * 3}px ${planet.color}44`,
-                          `0 0 ${planet.size * 3}px ${planet.color}bb, 0 0 ${planet.size * 4}px ${planet.color}66`,
-                          `0 0 ${planet.size * 2}px ${planet.color}99, 0 0 ${planet.size * 3}px ${planet.color}44`
-                        ]
-                      }}
-                      transition={{
-                        x: { duration: planet.speed, repeat: Infinity, ease: "linear" },
-                        y: { duration: planet.speed, repeat: Infinity, ease: "linear" },
-                        rotate: { duration: planet.speed / 4, repeat: Infinity, ease: "linear" },
-                        boxShadow: { duration: 4, repeat: Infinity }
+                        animationDuration: `${planet.speed}s`,
+                        '--orbit-radius': `${planet.distance}px`,
+                        '--start-angle': `${planet.startAngle}deg`,
+                        willChange: 'transform'
                       }}
                     >
                       {/* Saturn Rings */}
@@ -830,30 +712,24 @@ const Introduction = () => {
                           />
                         </>
                       )}
-                    </motion.div>
+                    </div>
                   </div>
                 );
               })}
               
-              {/* Asteroid Belt */}
-              {[...Array(15)].map((_, i) => {
+              {/* Asteroid Belt - Optimized */}
+              {[...Array(8)].map((_, i) => {
                 const asteroidDistance = 125;
-                const angle = (i * 24); // spread around orbit
+                const angle = (i * 45); // spread around orbit
                 return (
-                  <motion.div
+                  <div
                     key={`asteroid-${i}`}
-                    className="absolute w-1 h-1 bg-gray-400 rounded-full"
+                    className="absolute w-1 h-1 bg-gray-400 rounded-full asteroid-orbit"
                     style={{
                       left: `${160 + Math.cos(angle * Math.PI / 180) * asteroidDistance - 0.5}px`,
                       top: `${160 + Math.sin(angle * Math.PI / 180) * asteroidDistance - 0.5}px`,
-                    }}
-                    animate={{
-                      rotate: [0, 360],
-                      opacity: [0.3, 0.7, 0.3]
-                    }}
-                    transition={{
-                      rotate: { duration: 40, repeat: Infinity, ease: "linear" },
-                      opacity: { duration: 3, repeat: Infinity, delay: i * 0.2 }
+                      animationDelay: `${i * 0.2}s`,
+                      willChange: 'transform, opacity'
                     }}
                   />
                 );

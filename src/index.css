@@ -138,6 +138,123 @@ body {
   animation: twinkle 5s ease-in-out infinite;
 }
 
+/* High-performance CSS animations for stars */
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1) translateZ(0); }
+  50% { opacity: 0.8; transform: scale(1.05) translateZ(0); }
+}
+
+.star-twinkle {
+  animation: star-twinkle 3s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+/* High-performance dust floating animation */
+@keyframes dust-float {
+  0%, 100% { 
+    transform: translate(0, 0) translateZ(0); 
+    opacity: 0.05; 
+  }
+  50% { 
+    transform: translate(var(--move-x), var(--move-y)) translateZ(0); 
+    opacity: 0.2; 
+  }
+}
+
+.dust-float {
+  animation: dust-float 20s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Optimized bright star pulse */
+@keyframes bright-star-pulse {
+  0%, 100% { 
+    transform: translate(-50%, -50%) scale(1) translateZ(0); 
+    opacity: 0.6; 
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.1) translateZ(0); 
+    opacity: 0.9; 
+  }
+}
+
+.bright-star-pulse {
+  animation: bright-star-pulse 3s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* High-performance cluster rotation */
+@keyframes cluster-rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg) translateZ(0); }
+  to { transform: translate(-50%, -50%) rotate(360deg) translateZ(0); }
+}
+
+.cluster-rotate {
+  animation: cluster-rotate 120s linear infinite;
+  will-change: transform;
+}
+
+/* Cluster star twinkle */
+@keyframes cluster-star-twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+.cluster-star-twinkle {
+  animation: cluster-star-twinkle 2s ease-in-out infinite;
+  will-change: opacity;
+}
+
+/* High-performance solar system animations */
+@keyframes orbit-pulse {
+  0%, 100% { 
+    opacity: 0.1; 
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  50% { 
+    opacity: 0.3; 
+    border-color: var(--orbit-color);
+  }
+}
+
+.orbit-pulse {
+  animation: orbit-pulse 6s ease-in-out infinite;
+}
+
+@keyframes planet-orbit {
+  0% { 
+    transform: rotate(var(--start-angle)) translateX(var(--orbit-radius)) rotate(calc(-1 * var(--start-angle))) translateZ(0);
+  }
+  100% { 
+    transform: rotate(calc(var(--start-angle) + 360deg)) translateX(var(--orbit-radius)) rotate(calc(-1 * (var(--start-angle) + 360deg))) translateZ(0);
+  }
+}
+
+.planet-orbit {
+  animation: planet-orbit linear infinite;
+  will-change: transform;
+}
+
+/* Asteroid belt animation */
+@keyframes asteroid-orbit {
+  0% { 
+    transform: rotate(0deg) translateZ(0);
+    opacity: 0.3;
+  }
+  50% { 
+    opacity: 0.7;
+  }
+  100% { 
+    transform: rotate(360deg) translateZ(0);
+    opacity: 0.3;
+  }
+}
+
+.asteroid-orbit {
+  animation: asteroid-orbit 40s linear infinite;
+  will-change: transform, opacity;
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0px) translateZ(0); }
   50% { transform: translateY(-8px) translateZ(0); }
@@ -248,7 +365,48 @@ button, a, .interactive {
     background-position: 100% 50%;
   }
 }
+
 .animate-gradient-x {
   animation: gradient-x 1.8s ease-in-out infinite;
   background-size: 300% 100%;
+}
+
+/* 修正hover文字漸層閃爍問題 */
+.group:hover .animate-gradient-x {
+  animation-play-state: running;
+}
+
+.group:not(:hover) .animate-gradient-x {
+  animation-play-state: paused;
+}
+
+/* 更好的hover文字效果，避免閃爍 */
+.hover-text-gradient {
+  background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.group:hover .hover-text-gradient {
+  opacity: 1;
+  animation: gradient-x 1.8s ease-in-out infinite;
+}
+
+.hover-text-gradient-alt {
+  background: linear-gradient(45deg, var(--neon-green), var(--neon-cyan), var(--neon-purple));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.group:hover .hover-text-gradient-alt {
+  opacity: 1;
+  animation: gradient-x 1.8s ease-in-out infinite;
 }

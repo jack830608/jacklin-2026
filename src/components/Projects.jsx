@@ -387,8 +387,9 @@ const Projects = () => {
                   PROJECT #{experiment.id.toString().padStart(3, '0')}
                 </div>
                 
-                <h3 className="text-base font-bold text-white mb-2 group-hover:bg-gradient-to-r group-hover:from-neon-green group-hover:via-neon-cyan group-hover:to-neon-purple group-hover:bg-clip-text group-hover:text-transparent group-hover:animate-gradient-x transition-all duration-300 leading-tight">
-                  {experiment.codename}
+                <h3 className="text-base font-bold text-white mb-2 leading-tight relative">
+                  <span className="block">{experiment.codename}</span>
+                  <span className="absolute inset-0 hover-text-gradient-alt">{experiment.codename}</span>
                 </h3>
                 
                 <p className="text-white/70 text-xs leading-relaxed mb-3 flex-1 line-clamp-3">
