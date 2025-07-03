@@ -277,7 +277,7 @@ const Experience = () => {
       </motion.div>
 
       {/* Header and Timeline Container */}
-      <div className="relative z-10 h-screen flex flex-col space-y-8 justify-center overflow-hidden">
+      <div className="relative z-10 h-screen flex flex-col space-y-[4vh] justify-center overflow-hidden">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
