@@ -89,12 +89,12 @@ function App() {
       <AnimatedBackground currentSection={currentSection} />
       
       {/* Section Indicator - Planet Navigation */}
-      <div className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 flex flex-col">
+      <div className="fixed right-8 top-8 z-50 flex flex-col">
         {sections.map((section, index) => {
           const planetData = [
-            { color: '#00f5ff', size: 16, name: 'Introduction', ring: false }, // Reduced size
-            { color: '#8b5cf6', size: 14, name: 'Experience', ring: false }, // Reduced size
-            { color: '#00ff87', size: 12, name: 'Projects', ring: true } // Reduced size
+            { color: '#00f5ff', size: 18, name: 'Introduction', ring: false, type: 'earth' },
+            { color: '#8b5cf6', size: 16, name: 'Experience', ring: false, type: 'gas' },
+            { color: '#ffd700', size: 14, name: 'Projects', ring: true, type: 'saturn' }
           ][index];
           
           const isActive = index === currentSection;
@@ -115,57 +115,186 @@ function App() {
               }}
               transition={{ duration: 0.2, type: "spring", stiffness: 150 }}
             >
-              {/* Simplified Planet */}
+              {/* Realistic Planet */}
               <div
-                className={`rounded-full relative ${isActive ? 'animate-pulse' : ''}`}
+                className={`rounded-full relative overflow-hidden ${isActive ? 'animate-pulse' : ''}`}
                 style={{
                   width: `${planetData.size}px`,
                   height: `${planetData.size}px`,
-                  background: `radial-gradient(circle at 30% 30%, ${planetData.color}, ${planetData.color}cc, ${planetData.color}77)`,
+                  background: planetData.type === 'earth' 
+                    ? `radial-gradient(ellipse at 30% 30%, #4a90e2, #2171b5 50%, #1e3a5f 80%, #0f1419)`
+                    : planetData.type === 'gas'
+                    ? `radial-gradient(ellipse at 30% 30%, #a855f7, #9333ea 30%, #7c3aed 60%, #6d28d9 80%, #4c1d95)`
+                    : `radial-gradient(ellipse at 30% 30%, #ffd700, #ffb347 30%, #ff8c00 60%, #b8860b 80%, #8b4513)`,
                   boxShadow: isActive 
-                    ? `0 0 15px ${planetData.color}dd, 0 0 30px ${planetData.color}88`
-                    : `0 0 6px ${planetData.color}66`,
+                    ? (planetData.type === 'saturn' 
+                      ? `0 0 15px #ffd700cc, 0 0 25px #ffd70077, inset -2px -2px 6px rgba(0,0,0,0.4)`
+                      : `0 0 15px ${planetData.color}cc, 0 0 25px ${planetData.color}77, inset -2px -2px 6px rgba(0,0,0,0.4)`)
+                    : (planetData.type === 'saturn'
+                      ? `0 0 6px #ffd70099, inset -1px -1px 3px rgba(0,0,0,0.3)`
+                      : `0 0 6px ${planetData.color}99, inset -1px -1px 3px rgba(0,0,0,0.3)`),
                   transform: 'translateZ(0)',
                   animationDuration: '4s'
                 }}
               >
-                {/* Simplified Planet Surface Details */}
-                <div className="absolute inset-0 rounded-full overflow-hidden">
-                  <motion.div 
-                    className="absolute w-1 h-1 rounded-full opacity-50" // Reduced opacity
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.6)',
-                      top: '25%',
-                      left: '30%',
-                      filter: 'blur(0.5px)'
-                    }}
-                    animate={{ opacity: [0.3, 0.6, 0.3] }}
-                    transition={{ duration: 6, repeat: Infinity }} // Even slower animation
-                  />
-                </div>
+                {/* Planet Type Specific Details */}
+                {planetData.type === 'earth' && (
+                  <>
+                    {/* Continents */}
+                    <div className="absolute inset-0">
+                      <div className="absolute w-2 h-1 bg-green-600 rounded-full top-2 left-1 opacity-60" />
+                      <div className="absolute w-1 h-2 bg-green-700 rounded-full top-1 right-1 opacity-50" />
+                      <div className="absolute w-1.5 h-1 bg-yellow-600 rounded-full bottom-2 left-2 opacity-40" />
+                    </div>
+                    {/* Clouds */}
+                    <motion.div 
+                      className="absolute inset-0"
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                    >
+                      <div className="absolute w-1.5 h-0.5 bg-white rounded-full top-1.5 left-2 opacity-30" />
+                      <div className="absolute w-1 h-0.5 bg-white rounded-full bottom-2.5 right-1.5 opacity-25" />
+                    </motion.div>
+                  </>
+                )}
                 
-                {/* Simplified Ring for Projects planet */}
+                {planetData.type === 'gas' && (
+                  <>
+                    {/* Neptune-style gas bands */}
+                    <div className="absolute inset-0">
+                      <div className="absolute w-full h-0.5 bg-blue-300 opacity-40 top-1/6" />
+                      <div className="absolute w-full h-0.5 bg-purple-400 opacity-45 top-1/3" />
+                      <div className="absolute w-full h-0.5 bg-indigo-400 opacity-50 top-1/2" />
+                      <div className="absolute w-full h-0.5 bg-violet-400 opacity-35 top-2/3" />
+                      <div className="absolute w-full h-0.5 bg-blue-400 opacity-30 top-5/6" />
+                    </div>
+                    {/* Great Dark Spot - Neptune's storm */}
+                    <motion.div 
+                      className="absolute w-1.5 h-1 rounded-full opacity-50"
+                      style={{ 
+                        top: '40%', 
+                        left: '30%',
+                        background: 'radial-gradient(ellipse, #1e1b4b, #312e81 60%, #1e3a8a)',
+                        transform: 'rotate(-10deg)'
+                      }}
+                      animate={{ 
+                        scale: [1, 1.08, 1],
+                        rotate: [-10, -15, -10]
+                      }}
+                      transition={{ duration: 8, repeat: Infinity }}
+                    />
+                    {/* Smaller atmospheric features */}
+                    <motion.div 
+                      className="absolute w-0.5 h-0.5 bg-cyan-300 rounded-full opacity-40"
+                      style={{ top: '20%', left: '70%' }}
+                      animate={{ opacity: [0.2, 0.5, 0.2] }}
+                      transition={{ duration: 5, repeat: Infinity }}
+                    />
+                    <motion.div 
+                      className="absolute w-0.5 h-0.5 bg-purple-300 rounded-full opacity-35"
+                      style={{ top: '75%', left: '50%' }}
+                      animate={{ opacity: [0.3, 0.6, 0.3] }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                    />
+                  </>
+                )}
+                
+                {planetData.type === 'saturn' && (
+                  <>
+                    {/* Saturn bands */}
+                    <div className="absolute inset-0">
+                      <div className="absolute w-full h-0.5 bg-yellow-200 opacity-40 top-1/5" />
+                      <div className="absolute w-full h-0.5 bg-orange-300 opacity-50 top-2/5" />
+                      <div className="absolute w-full h-0.5 bg-yellow-400 opacity-35 top-3/5" />
+                      <div className="absolute w-full h-0.5 bg-orange-200 opacity-30 top-4/5" />
+                    </div>
+                    {/* Saturn's hexagonal storm */}
+                    <motion.div 
+                      className="absolute w-1 h-1 bg-yellow-100 opacity-50"
+                      style={{ 
+                        top: '20%', 
+                        left: '50%', 
+                        transform: 'translateX(-50%)',
+                        clipPath: 'polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)'
+                      }}
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    />
+                  </>
+                )}
+                
+                {/* Atmospheric rim light */}
+                <div 
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: planetData.type === 'saturn'
+                      ? `radial-gradient(ellipse at 25% 25%, transparent 70%, #ffd70044 85%, transparent)`
+                      : `radial-gradient(ellipse at 25% 25%, transparent 70%, ${planetData.color}44 85%, transparent)`,
+                  }}
+                />
+                
+                {/* Enhanced Ring System for Saturn */}
                 {planetData.ring && (
-                  <motion.div
-                    className="absolute border rounded-full opacity-40" // Reduced opacity
-                    style={{
-                      width: `${planetData.size * 1.6}px`, // Reduced size
-                      height: `${planetData.size * 1.6}px`,
-                      left: '50%',
-                      top: '50%',
-                      transform: 'translate(-50%, -50%) rotateX(60deg)',
-                      borderColor: `${planetData.color}88`,
-                      borderWidth: '1px'
-                    }}
-                    animate={{
-                      opacity: [0.3, 0.5, 0.3],
-                      rotateZ: [0, 360]
-                    }}
-                    transition={{
-                      opacity: { duration: 6, repeat: Infinity }, // Even slower animation
-                      rotateZ: { duration: 18, repeat: Infinity, ease: "linear" } // Even slower rotation
-                    }}
-                  />
+                  <div className="absolute inset-0" style={{ transform: 'perspective(50px)' }}>
+                    {/* Inner ring - A ring */}
+                    <motion.div
+                      className="absolute rounded-full"
+                      style={{
+                        width: `${planetData.size * 1.8}px`,
+                        height: `${planetData.size * 1.8}px`,
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%) rotateX(75deg)',
+                        border: '1.5px solid #daa520',
+                        boxShadow: `0 0 4px #daa52077, inset 0 0 4px #daa52044`
+                      }}
+                      animate={{
+                        rotateZ: [0, 360]
+                      }}
+                      transition={{
+                        duration: 25, repeat: Infinity, ease: "linear"
+                      }}
+                    />
+                    {/* Main ring - B ring */}
+                    <motion.div
+                      className="absolute rounded-full"
+                      style={{
+                        width: `${planetData.size * 2.1}px`,
+                        height: `${planetData.size * 2.1}px`,
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%) rotateX(75deg)',
+                        border: '2px solid #ffd700',
+                        boxShadow: `0 0 6px #ffd70099, inset 0 0 6px #ffd70066`
+                      }}
+                      animate={{
+                        rotateZ: [0, 360]
+                      }}
+                      transition={{
+                        duration: 30, repeat: Infinity, ease: "linear"
+                      }}
+                    />
+                    {/* Outer ring - C ring */}
+                    <motion.div
+                      className="absolute border-dashed rounded-full"
+                      style={{
+                        width: `${planetData.size * 2.5}px`,
+                        height: `${planetData.size * 2.5}px`,
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%) rotateX(75deg)',
+                        borderColor: '#cd853f',
+                        borderWidth: '1px',
+                        opacity: 0.6
+                      }}
+                      animate={{
+                        rotateZ: [360, 0]
+                      }}
+                      transition={{
+                        duration: 40, repeat: Infinity, ease: "linear"
+                      }}
+                    />
+                  </div>
                 )}
               </div>
               
