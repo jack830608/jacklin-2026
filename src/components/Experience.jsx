@@ -277,7 +277,7 @@ const Experience = () => {
       </motion.div>
 
       {/* Header and Timeline Container */}
-      <div className="relative z-10 h-screen flex flex-col space-y-[4vh] justify-center overflow-hidden">
+      <div className="relative z-10 h-screen flex flex-col space-y-4 lg:space-y-[4vh] justify-center overflow-hidden px-4 lg:px-0">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -287,7 +287,7 @@ const Experience = () => {
           className="text-center"
         >
           <motion.h2 
-            className="text-4xl md:text-5xl font-bold text-white mb-3"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3"
             animate={{
               textShadow: [
                 '0 0 10px rgba(139, 92, 246, 0.3)',
@@ -306,40 +306,58 @@ const Experience = () => {
 
         {/* Horizontal Timeline Container */}
         <div className="overflow-hidden flex-shrink-0">
-          <div className="overflow-x-auto overflow-y-hidden timeline-container" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <div className="flex items-center" style={{ width: `${spaceStations.length * 400 + 200}px`, minHeight: '400px' }}>
+          <div className="overflow-x-auto overflow-y-hidden timeline-container" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }} onWheel={(e) => {
+            // Only prevent propagation for horizontal scrolling
+            const isHorizontalScroll = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+            
+            if (isHorizontalScroll) {
+              e.stopPropagation();
+            }
+            // For vertical scrolling, let it bubble up for section switching
+          }} onTouchStart={(e) => {
+            // Prevent section switching when touching timeline on mobile
+            e.stopPropagation();
+          }}>
+            <div className="flex items-center" style={{ width: `${spaceStations.length * (typeof window !== 'undefined' && window.innerWidth < 768 ? 320 : 400) + 200}px`, minHeight: typeof window !== 'undefined' && window.innerWidth < 768 ? '300px' : '400px' }}>
             
             {/* Timeline Path */}
             <div className="absolute top-1/2 left-0 right-0 h-1 transform -translate-y-1/2">
               {/* Main Energy Stream */}
-              <motion.div
-                className="w-full h-1 bg-gradient-to-r from-neon-purple via-neon-cyan to-neon-green opacity-60"
+              <motion.div 
+                className="h-1 bg-gradient-to-r from-neon-purple via-neon-cyan to-neon-green opacity-60"
+                style={{ 
+                  width: `${spaceStations.length * (typeof window !== 'undefined' && window.innerWidth < 768 ? 320 : 400) + (typeof window !== 'undefined' && window.innerWidth < 768 ? 120 : 300)}px`,
+                  zIndex: 1,
+                }}
                 animate={{
                   opacity: [0.4, 0.8, 0.4]
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
               />
               
-              {/* Flowing Energy Particles */}
-              <motion.div
-                className="absolute top-0 w-20 h-1 bg-gradient-to-r from-transparent via-white to-transparent"
-                animate={{
-                  x: [0, spaceStations.length * 400 + 100]
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              />
+              {/* Flowing Energy Particles - Hidden on mobile to prevent overflow */}
+              {typeof window !== 'undefined' && window.innerWidth >= 768 && (
+                <motion.div
+                  className="absolute top-0 w-20 h-1 bg-gradient-to-r from-transparent via-white to-transparent"
+                  style={{ maxWidth: '100%' }}
+                  animate={{
+                    x: [0, Math.min(spaceStations.length * 400, typeof window !== 'undefined' ? window.innerWidth - 100 : 1200)]
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                />
+              )}
             </div>
 
             {/* Space Stations */}
             {spaceStations.map((station, index) => (
               <motion.div
                 key={station.id}
-                className="relative flex-shrink-0 mx-8"
-                style={{ width: '350px' }}
+                className="relative flex-shrink-0 mx-4 sm:mx-6 lg:mx-8"
+                style={{ width: typeof window !== 'undefined' && window.innerWidth < 768 ? '300px' : '350px', maxWidth: '90vw' }}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
@@ -437,10 +455,10 @@ const Experience = () => {
                     <div className="text-xs font-mono mb-1" style={{ color: station.color }}>
                       {station.stationType.toUpperCase()}
                     </div>
-                    <h3 className="text-lg font-bold text-white mb-1">
+                    <h3 className="text-base sm:text-lg font-bold text-white mb-1">
                       {station.company}
                     </h3>
-                    <div className="text-sm font-medium mb-2" style={{ color: station.color }}>
+                    <div className="text-xs sm:text-sm font-medium mb-2" style={{ color: station.color }}>
                       {station.position}
                     </div>
                     <div className="text-xs text-white/60">
@@ -449,7 +467,7 @@ const Experience = () => {
                   </div>
 
                   {/* Description */}
-                  <p className="text-white/70 text-sm mb-4 leading-relaxed">
+                  <p className="text-white/70 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed">
                     {station.description}
                   </p>
 
@@ -459,7 +477,7 @@ const Experience = () => {
                       MISSION ACHIEVEMENTS:
                     </div>
                     <div 
-                      className="space-y-1 max-h-32 overflow-y-auto achievement-scroll" 
+                      className="space-y-1 max-h-24 sm:max-h-32 overflow-y-auto achievement-scroll" 
                       style={{ '--station-color': station.color }}
                       onWheel={(e) => e.stopPropagation()}
                     >

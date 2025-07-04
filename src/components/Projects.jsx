@@ -300,7 +300,7 @@ const Projects = () => {
         </div>
       </motion.div>
       
-      <div className="section-container section-padding relative z-10 h-full flex flex-col justify-center">
+      <div className="section-container section-padding relative z-10 h-full flex flex-col justify-center px-4 lg:px-0 w-full max-w-full overflow-hidden">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -309,7 +309,7 @@ const Projects = () => {
           className="text-center mb-6"
         >
           <motion.h2 
-            className="text-4xl md:text-5xl font-bold text-white mb-3"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3"
             animate={{
               textShadow: [
                 '0 0 10px rgba(0, 255, 135, 0.3)',
@@ -319,145 +319,458 @@ const Projects = () => {
             }}
             transition={{ duration: 8, repeat: Infinity }}
           >
-            Cosmic <span className="bg-gradient-to-r from-neon-green via-neon-cyan to-neon-purple bg-clip-text text-transparent">Laboratory</span>
+            My <span className="bg-gradient-to-r from-neon-green via-neon-cyan to-neon-purple bg-clip-text text-transparent">Projects</span>
           </motion.h2>
           <p className="text-white/70 text-base max-w-2xl mx-auto">
-            Featured <span className="text-neon-cyan">experimental projects</span> that push the boundaries of <span className="text-neon-green">digital innovation</span>
+            Featured <span className="text-neon-cyan">projects</span> that showcase my expertise in <span className="text-neon-green">full-stack development</span>
           </p>
         </motion.div>
 
-        {/* Compact Project Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto"
-        >
-          {cosmicExperiments.slice(0, 6).map((experiment, index) => (
-            <motion.div
-              key={experiment.id}
-              variants={itemVariants}
-              className="group relative rounded-xl overflow-hidden border-2 transition-all duration-200 hover:shadow-lg hover:-translate-y-1 bg-black/80 backdrop-blur-sm h-72 cursor-pointer"
-              style={{
-                borderColor: index % 3 === 0 ? 'rgba(0, 245, 255, 0.4)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)',
-                boxShadow: `0 6px 20px ${
-                  index % 3 === 0 ? 'rgba(0, 245, 255, 0.1)' : 
-                  index % 3 === 1 ? 'rgba(139, 92, 246, 0.1)' : 
-                  'rgba(0, 255, 135, 0.1)'
-                }`
-              }}
-            >
-              {/* Header */}
-              <div className="relative h-16 overflow-hidden"
-                   style={{
-                     background: `linear-gradient(135deg, ${
-                       index % 3 === 0 ? '#00f5ff15, #8b5cf630' : 
-                       index % 3 === 1 ? '#8b5cf615, #ff008030' : 
-                       '#00ff8715, #00f5ff30'
-                     })`
-                   }}>
-                <div className="absolute inset-0 bg-black/50"></div>
-                <div className="flex items-center justify-between p-3">
-                  <div className="text-2xl">
-                    {experiment.icon}
-                  </div>
-                  <div className="flex gap-2">
-                    <div className="px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
+        {/* Projects Container - Horizontal scroll on mobile, grid on desktop */}
+        <div className="w-full max-w-6xl mx-auto">
+          {/* Mobile: Horizontal Scroll */}
+          <div className="block lg:hidden">
+            <div className="overflow-x-auto overflow-y-hidden projects-container" 
+                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                 onWheel={(e) => {
+                   const isHorizontalScroll = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+                   if (isHorizontalScroll) {
+                     e.stopPropagation();
+                   }
+                 }}
+                 onTouchStart={(e) => {
+                   e.stopPropagation();
+                 }}>
+              <motion.div 
+                className="flex gap-4 pb-4"
+                style={{ width: `${cosmicExperiments.length * 320 + 100}px` }}
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                {cosmicExperiments.slice(0, 6).map((experiment, index) => (
+                  <motion.div
+                    key={experiment.id}
+                    variants={itemVariants}
+                    className="group relative rounded-xl overflow-hidden border-2 bg-black/80 backdrop-blur-sm cursor-pointer flex-shrink-0"
+                    style={{
+                      width: '300px',
+                      height: '400px',
+                    }}
+                    initial={{
+                      borderColor: index % 3 === 0 ? 'rgba(0, 245, 255, 0.4)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)',
+                      boxShadow: `0 6px 20px ${
+                        index % 3 === 0 ? 'rgba(0, 245, 255, 0.1)' : 
+                        index % 3 === 1 ? 'rgba(139, 92, 246, 0.1)' : 
+                        'rgba(0, 255, 135, 0.1)'
+                      }`
+                    }}
+                    whileHover={{
+                      y: -8,
+                      scale: 1.02,
+                      borderColor: index % 3 === 0 ? 'rgba(0, 245, 255, 0.8)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.8)' : 'rgba(0, 255, 135, 0.8)',
+                      boxShadow: `0 20px 40px ${
+                        index % 3 === 0 ? 'rgba(0, 245, 255, 0.3)' : 
+                        index % 3 === 1 ? 'rgba(139, 92, 246, 0.3)' : 
+                        'rgba(0, 255, 135, 0.3)'
+                      }`
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                    animate={{
+                      borderColor: [
+                        index % 3 === 0 ? 'rgba(0, 245, 255, 0.4)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)',
+                        index % 3 === 0 ? 'rgba(0, 245, 255, 0.6)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.6)' : 'rgba(0, 255, 135, 0.6)',
+                        index % 3 === 0 ? 'rgba(0, 245, 255, 0.4)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)'
+                      ]
+                    }}
+                    transition={{ 
+                      duration: 3 + index * 0.5, 
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    {/* Header */}
+                    <div className="relative h-16 overflow-hidden"
                          style={{
-                           backgroundColor: `${
-                             experiment.status === 'Active Mission' ? 'rgba(0, 255, 135, 0.2)' :
-                             experiment.status === 'Deployed' ? 'rgba(0, 245, 255, 0.2)' :
-                             experiment.status === 'Field Testing' ? 'rgba(255, 0, 128, 0.2)' :
-                             'rgba(139, 92, 246, 0.2)'
-                           }`,
-                           borderColor: `${
-                             experiment.status === 'Active Mission' ? 'rgba(0, 255, 135, 0.5)' :
-                             experiment.status === 'Deployed' ? 'rgba(0, 245, 255, 0.5)' :
-                             experiment.status === 'Field Testing' ? 'rgba(255, 0, 128, 0.5)' :
-                             'rgba(139, 92, 246, 0.5)'
-                           }`,
-                           color: `${
-                             experiment.status === 'Active Mission' ? '#00ff87' :
-                             experiment.status === 'Deployed' ? '#00f5ff' :
-                             experiment.status === 'Field Testing' ? '#ff0080' :
-                             '#8b5cf6'
-                           }`
+                           background: `linear-gradient(135deg, ${
+                             index % 3 === 0 ? '#00f5ff15, #8b5cf630' : 
+                             index % 3 === 1 ? '#8b5cf615, #ff008030' : 
+                             '#00ff8715, #00f5ff30'
+                           })`
                          }}>
-                      {experiment.status}
-                    </div>
-                    {experiment.isInternal && (
-                      <div className="px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
-                           style={{
-                             backgroundColor: 'rgba(255, 165, 0, 0.2)',
-                             borderColor: 'rgba(255, 165, 0, 0.5)',
-                             color: '#ffa500'
-                           }}>
-                        Internal
+                      <div className="absolute inset-0 bg-black/50"></div>
+                      <div className="flex items-center justify-between p-3">
+                        <motion.div 
+                          className="text-2xl"
+                          animate={{
+                            rotate: [0, 5, -5, 0],
+                            scale: [1, 1.1, 1, 1.05, 1]
+                          }}
+                          transition={{
+                            duration: 4 + index * 0.3,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                        >
+                          {experiment.icon}
+                        </motion.div>
+                        <div className="flex gap-2">
+                          <motion.div 
+                            className="px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
+                            animate={{
+                              scale: [1, 1.05, 1],
+                              opacity: [0.8, 1, 0.8]
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: "easeInOut"
+                            }}
+                            style={{
+                                 backgroundColor: `${
+                                   experiment.status === 'Active Mission' ? 'rgba(0, 255, 135, 0.2)' :
+                                   experiment.status === 'Deployed' ? 'rgba(0, 245, 255, 0.2)' :
+                                   experiment.status === 'Field Testing' ? 'rgba(255, 0, 128, 0.2)' :
+                                   'rgba(139, 92, 246, 0.2)'
+                                 }`,
+                                 borderColor: `${
+                                   experiment.status === 'Active Mission' ? 'rgba(0, 255, 135, 0.5)' :
+                                   experiment.status === 'Deployed' ? 'rgba(0, 245, 255, 0.5)' :
+                                   experiment.status === 'Field Testing' ? 'rgba(255, 0, 128, 0.5)' :
+                                   'rgba(139, 92, 246, 0.5)'
+                                 }`,
+                                 color: `${
+                                   experiment.status === 'Active Mission' ? '#00ff87' :
+                                   experiment.status === 'Deployed' ? '#00f5ff' :
+                                   experiment.status === 'Field Testing' ? '#ff0080' :
+                                   '#8b5cf6'
+                                 }`
+                               }}>
+                            {experiment.status}
+                          </motion.div>
+                          {experiment.isInternal && (
+                            <div className="px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
+                                 style={{
+                                   backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                                   borderColor: 'rgba(255, 165, 0, 0.5)',
+                                   color: '#ffa500'
+                                 }}>
+                              Internal
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+                    </div>
 
-              {/* Content */}
-              <div className="p-4 h-56 flex flex-col" onClick={() => experiment.link && window.open(experiment.link, '_blank')}>
-                <div className="text-neon-cyan font-mono text-xs mb-1">
-                  PROJECT #{experiment.id.toString().padStart(3, '0')}
-                </div>
-                
-                <h3 className="text-base font-bold text-white mb-2 leading-tight relative">
-                  <span className="block">{experiment.codename}</span>
-                  <span className="absolute inset-0 hover-text-gradient-alt">{experiment.codename}</span>
-                </h3>
-                
-                <div className="flex-1 mb-3 overflow-hidden">
-                  <p className="text-white/70 text-xs leading-relaxed h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent hover:scrollbar-thumb-white/40" 
-                     onWheel={(e) => e.stopPropagation()}>
-                    {experiment.mission}
-                  </p>
-                </div>
-
-                {/* Tech Stack */}
-                <div className="space-y-1">
-                  <div className="text-neon-green font-mono text-xs">TECH:</div>
-                  <div className="flex flex-wrap gap-1">
-                    {experiment.technologies.slice(0, 4).map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 rounded-full text-xs font-medium border"
-                        style={{
-                          backgroundColor: `${
-                            index % 3 === 0 ? 'rgba(0, 245, 255, 0.1)' : 
-                            index % 3 === 1 ? 'rgba(139, 92, 246, 0.1)' : 
-                            'rgba(0, 255, 135, 0.1)'
-                          }`,
-                          borderColor: `${
-                            index % 3 === 0 ? 'rgba(0, 245, 255, 0.3)' : 
-                            index % 3 === 1 ? 'rgba(139, 92, 246, 0.3)' : 
-                            'rgba(0, 255, 135, 0.3)'
-                          }`,
-                          color: `${
-                            index % 3 === 0 ? '#00f5ff' : 
-                            index % 3 === 1 ? '#8b5cf6' : 
-                            '#00ff87'
-                          }`
-                        }}
+                    {/* Content */}
+                    <div className="p-4 h-80 flex flex-col" onClick={() => experiment.link && window.open(experiment.link, '_blank')}>
+                      <div className="text-neon-cyan font-mono text-xs mb-1">
+                        PROJECT #{experiment.id.toString().padStart(3, '0')}
+                      </div>
+                      
+                      <motion.h3 
+                        className="text-base font-bold text-white mb-2 leading-tight relative"
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
                       >
-                        {tech}
-                      </span>
-                    ))}
-                    {experiment.technologies.length > 4 && (
-                      <span className="px-2 py-1 text-xs text-white/50">
-                        +{experiment.technologies.length - 4}
-                      </span>
-                    )}
+                        <motion.span 
+                          className="block"
+                          animate={{
+                            color: [
+                              '#ffffff',
+                              index % 3 === 0 ? '#00f5ff' : index % 3 === 1 ? '#8b5cf6' : '#00ff87',
+                              '#ffffff'
+                            ]
+                          }}
+                          transition={{
+                            duration: 4 + index * 0.5,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                        >
+                          {experiment.codename}
+                        </motion.span>
+                        <span className="absolute inset-0 hover-text-gradient-alt opacity-0 group-hover:opacity-100 transition-opacity duration-300">{experiment.codename}</span>
+                      </motion.h3>
+                      
+                      <div className="flex-1 mb-3 overflow-hidden">
+                        <p className="text-white/70 text-xs leading-relaxed h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent hover:scrollbar-thumb-white/40" 
+                           onWheel={(e) => e.stopPropagation()}>
+                          {experiment.mission}
+                        </p>
+                      </div>
+
+                      {/* Tech Stack */}
+                      <div className="space-y-1">
+                        <div className="text-neon-green font-mono text-xs">TECH:</div>
+                        <div className="flex flex-wrap gap-1">
+                          {experiment.technologies.slice(0, 4).map((tech, techIndex) => (
+                            <motion.span
+                              key={tech}
+                              className="px-2 py-1 rounded-full text-xs font-medium border"
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              animate={{ 
+                                opacity: 1, 
+                                scale: 1,
+                                y: [0, -2, 0]
+                              }}
+                              transition={{
+                                delay: techIndex * 0.1,
+                                y: {
+                                  duration: 2 + techIndex * 0.2,
+                                  repeat: Infinity,
+                                  ease: "easeInOut"
+                                }
+                              }}
+                              whileHover={{ scale: 1.1, y: -4 }}
+                              style={{
+                                backgroundColor: `${
+                                  index % 3 === 0 ? 'rgba(0, 245, 255, 0.1)' : 
+                                  index % 3 === 1 ? 'rgba(139, 92, 246, 0.1)' : 
+                                  'rgba(0, 255, 135, 0.1)'
+                                }`,
+                                borderColor: `${
+                                  index % 3 === 0 ? 'rgba(0, 245, 255, 0.3)' : 
+                                  index % 3 === 1 ? 'rgba(139, 92, 246, 0.3)' : 
+                                  'rgba(0, 255, 135, 0.3)'
+                                }`,
+                                color: `${
+                                  index % 3 === 0 ? '#00f5ff' : 
+                                  index % 3 === 1 ? '#8b5cf6' : 
+                                  '#00ff87'
+                                }`
+                              }}
+                            >
+                              {tech}
+                            </motion.span>
+                          ))}
+                          {experiment.technologies.length > 4 && (
+                            <span className="px-2 py-1 text-xs text-white/50">
+                              +{experiment.technologies.length - 4}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Desktop: Grid Layout */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="hidden lg:grid grid-cols-3 gap-4"
+          >
+            {cosmicExperiments.slice(0, 6).map((experiment, index) => (
+              <motion.div
+                key={experiment.id}
+                variants={itemVariants}
+                className="group relative rounded-xl overflow-hidden border-2 bg-black/80 backdrop-blur-sm h-64 sm:h-72 cursor-pointer"
+                initial={{
+                  borderColor: index % 3 === 0 ? 'rgba(0, 245, 255, 0.4)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)',
+                  boxShadow: `0 6px 20px ${
+                    index % 3 === 0 ? 'rgba(0, 245, 255, 0.1)' : 
+                    index % 3 === 1 ? 'rgba(139, 92, 246, 0.1)' : 
+                    'rgba(0, 255, 135, 0.1)'
+                  }`
+                }}
+                whileHover={{
+                  y: -8,
+                  scale: 1.02,
+                  borderColor: index % 3 === 0 ? 'rgba(0, 245, 255, 0.8)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.8)' : 'rgba(0, 255, 135, 0.8)',
+                  boxShadow: `0 20px 40px ${
+                    index % 3 === 0 ? 'rgba(0, 245, 255, 0.3)' : 
+                    index % 3 === 1 ? 'rgba(139, 92, 246, 0.3)' : 
+                    'rgba(0, 255, 135, 0.3)'
+                  }`
+                }}
+                whileTap={{ scale: 0.98 }}
+                animate={{
+                  borderColor: [
+                    index % 3 === 0 ? 'rgba(0, 245, 255, 0.4)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)',
+                    index % 3 === 0 ? 'rgba(0, 245, 255, 0.6)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.6)' : 'rgba(0, 255, 135, 0.6)',
+                    index % 3 === 0 ? 'rgba(0, 245, 255, 0.4)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)'
+                  ]
+                }}
+                transition={{ 
+                  duration: 3 + index * 0.5, 
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                {/* Header */}
+                <div className="relative h-16 overflow-hidden"
+                     style={{
+                       background: `linear-gradient(135deg, ${
+                         index % 3 === 0 ? '#00f5ff15, #8b5cf630' : 
+                         index % 3 === 1 ? '#8b5cf615, #ff008030' : 
+                         '#00ff8715, #00f5ff30'
+                       })`
+                     }}>
+                  <div className="absolute inset-0 bg-black/50"></div>
+                  <div className="flex items-center justify-between p-3">
+                    <motion.div 
+                      className="text-2xl"
+                      animate={{
+                        rotate: [0, 5, -5, 0],
+                        scale: [1, 1.1, 1, 1.05, 1]
+                      }}
+                      transition={{
+                        duration: 4 + index * 0.3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      {experiment.icon}
+                    </motion.div>
+                    <div className="flex gap-2">
+                      <motion.div 
+                        className="px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
+                        animate={{
+                          scale: [1, 1.05, 1],
+                          opacity: [0.8, 1, 0.8]
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        style={{
+                             backgroundColor: `${
+                               experiment.status === 'Active Mission' ? 'rgba(0, 255, 135, 0.2)' :
+                               experiment.status === 'Deployed' ? 'rgba(0, 245, 255, 0.2)' :
+                               experiment.status === 'Field Testing' ? 'rgba(255, 0, 128, 0.2)' :
+                               'rgba(139, 92, 246, 0.2)'
+                             }`,
+                             borderColor: `${
+                               experiment.status === 'Active Mission' ? 'rgba(0, 255, 135, 0.5)' :
+                               experiment.status === 'Deployed' ? 'rgba(0, 245, 255, 0.5)' :
+                               experiment.status === 'Field Testing' ? 'rgba(255, 0, 128, 0.5)' :
+                               'rgba(139, 92, 246, 0.5)'
+                             }`,
+                             color: `${
+                               experiment.status === 'Active Mission' ? '#00ff87' :
+                               experiment.status === 'Deployed' ? '#00f5ff' :
+                               experiment.status === 'Field Testing' ? '#ff0080' :
+                               '#8b5cf6'
+                             }`
+                           }}>
+                        {experiment.status}
+                      </motion.div>
+                      {experiment.isInternal && (
+                        <div className="px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
+                             style={{
+                               backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                               borderColor: 'rgba(255, 165, 0, 0.5)',
+                               color: '#ffa500'
+                             }}>
+                          Internal
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+
+                {/* Content */}
+                <div className="p-3 sm:p-4 h-48 sm:h-56 flex flex-col" onClick={() => experiment.link && window.open(experiment.link, '_blank')}>
+                  <div className="text-neon-cyan font-mono text-xs mb-1">
+                    PROJECT #{experiment.id.toString().padStart(3, '0')}
+                  </div>
+                  
+                  <motion.h3 
+                    className="text-base font-bold text-white mb-2 leading-tight relative"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <motion.span 
+                      className="block"
+                      animate={{
+                        color: [
+                          '#ffffff',
+                          index % 3 === 0 ? '#00f5ff' : index % 3 === 1 ? '#8b5cf6' : '#00ff87',
+                          '#ffffff'
+                        ]
+                      }}
+                      transition={{
+                        duration: 4 + index * 0.5,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      {experiment.codename}
+                    </motion.span>
+                    <span className="absolute inset-0 hover-text-gradient-alt opacity-0 group-hover:opacity-100 transition-opacity duration-300">{experiment.codename}</span>
+                  </motion.h3>
+                  
+                  <div className="flex-1 mb-3 overflow-hidden">
+                    <p className="text-white/70 text-xs leading-relaxed h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent hover:scrollbar-thumb-white/40" 
+                       onWheel={(e) => e.stopPropagation()}>
+                      {experiment.mission}
+                    </p>
+                  </div>
+
+                  {/* Tech Stack */}
+                  <div className="space-y-1">
+                    <div className="text-neon-green font-mono text-xs">TECH:</div>
+                    <div className="flex flex-wrap gap-1">
+                      {experiment.technologies.slice(0, 4).map((tech, techIndex) => (
+                        <motion.span
+                          key={tech}
+                          className="px-2 py-1 rounded-full text-xs font-medium border"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ 
+                            opacity: 1, 
+                            scale: 1,
+                            y: [0, -2, 0]
+                          }}
+                          transition={{
+                            delay: techIndex * 0.1,
+                            y: {
+                              duration: 2 + techIndex * 0.2,
+                              repeat: Infinity,
+                              ease: "easeInOut"
+                            }
+                          }}
+                          whileHover={{ scale: 1.1, y: -4 }}
+                          style={{
+                            backgroundColor: `${
+                              index % 3 === 0 ? 'rgba(0, 245, 255, 0.1)' : 
+                              index % 3 === 1 ? 'rgba(139, 92, 246, 0.1)' : 
+                              'rgba(0, 255, 135, 0.1)'
+                            }`,
+                            borderColor: `${
+                              index % 3 === 0 ? 'rgba(0, 245, 255, 0.3)' : 
+                              index % 3 === 1 ? 'rgba(139, 92, 246, 0.3)' : 
+                              'rgba(0, 255, 135, 0.3)'
+                            }`,
+                            color: `${
+                              index % 3 === 0 ? '#00f5ff' : 
+                              index % 3 === 1 ? '#8b5cf6' : 
+                              '#00ff87'
+                            }`
+                          }}
+                        >
+                          {tech}
+                        </motion.span>
+                      ))}
+                      {experiment.technologies.length > 4 && (
+                        <span className="px-2 py-1 text-xs text-white/50">
+                          +{experiment.technologies.length - 4}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   )

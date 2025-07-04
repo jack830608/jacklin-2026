@@ -83,13 +83,15 @@ function App() {
   }, [handleWheel, handleKeyDown])
 
   return (
-    <div className="h-screen overflow-hidden bg-black text-white relative cursor-none">
-      <PerformanceMonitor />
+    <div className="h-screen overflow-hidden bg-black text-white relative cursor-none w-full max-w-full">
+      <div className="hidden lg:block">
+        <PerformanceMonitor />
+      </div>
       <MouseFollower />
       <AnimatedBackground currentSection={currentSection} />
       
       {/* Section Indicator - Planet Navigation */}
-      <div className="fixed right-8 top-8 z-50 flex flex-col">
+      <div className="fixed right-4 sm:right-6 lg:right-8 top-4 sm:top-6 lg:top-8 z-50 flex flex-col">
         {sections.map((section, index) => {
           const planetData = [
             { color: '#00f5ff', size: 18, name: 'Introduction', ring: false, type: 'earth' },
@@ -105,7 +107,7 @@ function App() {
               onClick={() => handlePlanetClick(index)}
               className="relative group"
               style={{
-                marginBottom: index < sections.length - 1 ? '2rem' : '0' // Reduced margin
+                marginBottom: index < sections.length - 1 ? '1.5rem' : '0'
               }}
               whileHover={{ scale: 1.05 }} // Further reduced hover scale
               whileTap={{ scale: 0.95 }}

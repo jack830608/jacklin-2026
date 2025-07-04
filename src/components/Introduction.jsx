@@ -302,13 +302,13 @@ const Introduction = () => {
       </div>
 
       <div className="section-container section-padding relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-8 items-center min-h-[80vh] w-full max-w-none">
           {/* Left Content */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="text-center lg:text-left lg:min-w-[530px]"
+            className="text-center lg:text-left w-full lg:max-w-md order-2 lg:order-1"
           >
           {/* Cosmic Greeting */}
           <motion.div
@@ -336,7 +336,7 @@ const Introduction = () => {
           >
             {/* Main Identity Display */}
             <motion.div 
-              className="relative bg-black/90 border-2 border-neon-cyan/40 rounded-xl p-8 font-mono overflow-hidden"
+              className="relative bg-black/90 border-2 border-neon-cyan/40 rounded-xl p-3 sm:p-4 lg:p-5 font-mono overflow-hidden w-full max-w-full"
               animate={{
                 borderColor: [
                   'rgba(0, 245, 255, 0.4)',
@@ -372,7 +372,7 @@ const Introduction = () => {
 
               {/* Name Display */}
               <motion.h1
-                className="text-3xl md:text-5xl font-extrabold mb-2 relative tracking-wider"
+                className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold mb-2 relative tracking-wider break-words"
                 style={{ fontFamily: '"SF Pro Display", "Avenir Next", "Futura", "Century Gothic", "Trebuchet MS", sans-serif' }}
                 animate={{
                   textShadow: [
@@ -460,7 +460,7 @@ const Introduction = () => {
             className="relative mb-6"
           >
             <motion.div 
-              className="bg-black/90 border-2 border-neon-cyan/40 rounded-xl p-8 font-mono relative overflow-hidden"
+              className="bg-black/90 border-2 border-neon-cyan/40 rounded-xl p-3 sm:p-4 lg:p-5 font-mono relative overflow-hidden w-full max-w-full"
               animate={{
                 borderColor: [
                   'rgba(0, 245, 255, 0.4)',
@@ -492,9 +492,9 @@ const Introduction = () => {
               </div>
               
               {/* Command Line */}
-              <div className="text-sm mb-4 pb-3 border-b border-white/20 flex items-center space-x-1">
-                <span className="text-neon-green">jack@cosmos:~$</span>{' '}
-                <span className="text-white min-w-0 flex-1 text-ellipsis overflow-hidden">{typedText}</span>
+              <div className="text-xs sm:text-sm mb-4 pb-3 border-b border-white/20 flex items-start space-x-1 flex-wrap">
+                <span className="text-neon-green whitespace-nowrap">jack@cosmos:~$</span>{' '}
+                <span className="text-white break-all flex-1 min-w-0">{typedText}</span>
                 <motion.span
                   animate={{ opacity: [0, 1, 0] }}
                   transition={{ duration: 1, repeat: Infinity }}
@@ -509,20 +509,20 @@ const Introduction = () => {
                 <div className="text-neon-green text-xs mb-2">OUTPUT:</div>
                 <div className="text-xs leading-relaxed space-y-1.5 overflow-hidden">
                   <div className="flex items-start">
-                    <span className="text-neon-cyan mr-2">●</span>
-                    <span className="text-white/80">
+                    <span className="text-neon-cyan mr-2 flex-shrink-0">●</span>
+                    <span className="text-white/80 break-words">
                       Architecting digital universes through <span className="text-neon-cyan font-medium">innovative code</span>
                     </span>
                   </div>
                   <div className="flex items-start">
-                    <span className="text-neon-green mr-2">●</span>
-                    <span className="text-white/80">
+                    <span className="text-neon-green mr-2 flex-shrink-0">●</span>
+                    <span className="text-white/80 break-words">
                       <span className="text-neon-green font-medium">8+ stellar cycles</span> mastering full-stack development
                     </span>
                   </div>
                   <div className="flex items-start">
-                    <span className="text-neon-pink mr-2">●</span>
-                    <span className="text-white/80">
+                    <span className="text-neon-pink mr-2 flex-shrink-0">●</span>
+                    <span className="text-white/80 break-words">
                       Pioneering <span className="text-neon-pink font-medium">AI consciousness integration</span>
                     </span>
                   </div>
@@ -534,7 +534,7 @@ const Introduction = () => {
                 {/* Network Links */}
                 <div>
                   <div className="text-neon-cyan text-xs mb-3">CONTACT & LINKS:</div>
-                  <div className="flex justify-center lg:justify-start space-x-3">
+                  <div className="flex justify-center lg:justify-start space-x-2 sm:space-x-3">
                     {[
                       { icon: FiMail, href: "mailto:jack830608@gmail.com", label: "EMAIL_CONTACT", color: "neon-pink" },
                       { icon: FiGithub, href: "https://github.com/jack830608", label: "GITHUB_PORTAL", color: "neon-cyan" },
@@ -554,7 +554,7 @@ const Introduction = () => {
                         transition={{ type: "spring", stiffness: 200, damping: 15 }}
                       >
                         <motion.div
-                          className={`relative p-2.5 bg-black/60 rounded-lg border-2 transition-all duration-300`}
+                          className={`relative p-2 sm:p-2.5 bg-black/60 rounded-lg border-2 transition-all duration-300`}
                           whileHover={{
                             scale: 1.05,
                             rotate: [0, -1, 1, 0],
@@ -574,7 +574,7 @@ const Introduction = () => {
                           }}
                         >
                           <social.icon 
-                            className={`w-4 h-4 ${
+                            className={`w-3 h-3 sm:w-4 sm:h-4 ${
                               social.color === "neon-cyan" 
                                 ? "text-neon-cyan" 
                                 : social.color === "neon-pink"
@@ -630,10 +630,10 @@ const Introduction = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 0.5 }}
-            className="relative flex items-center justify-center h-full"
+            className="relative flex items-center justify-center h-auto lg:h-full order-1 lg:order-2 w-full"
           >
             {/* Solar System Container */}
-            <div className="relative w-80 h-80">
+            <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 mx-auto">
               
               {/* Central Sun */}
               <motion.div
@@ -653,8 +653,8 @@ const Introduction = () => {
                 { distance: 135, size: 14, color: '#d4a574', speed: 28, name: 'Jupiter', startAngle: 240 },
                 { distance: 160, size: 11, color: '#fab569', speed: 35, name: 'Saturn', startAngle: 300 }
               ].map((planet, index) => {
-                const orbitCenterX = 160; // half of container width
-                const orbitCenterY = 160; // half of container height
+                const orbitCenterX = 128; // Use smaller fixed size to prevent overflow
+                const orbitCenterY = 128;
                 
                 return (
                   <div key={`planet-${index}`} className="absolute">
@@ -731,8 +731,8 @@ const Introduction = () => {
                     key={`asteroid-${i}`}
                     className="absolute w-1 h-1 bg-gray-400 rounded-full asteroid-orbit"
                     style={{
-                      left: `${160 + Math.cos(angle * Math.PI / 180) * asteroidDistance - 0.5}px`,
-                      top: `${160 + Math.sin(angle * Math.PI / 180) * asteroidDistance - 0.5}px`,
+                      left: `${128 + Math.cos(angle * Math.PI / 180) * asteroidDistance - 0.5}px`,
+                      top: `${128 + Math.sin(angle * Math.PI / 180) * asteroidDistance - 0.5}px`,
                       animationDelay: `${i * 0.2}s`,
                       willChange: 'transform, opacity'
                     }}
