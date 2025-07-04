@@ -38,57 +38,64 @@ const Projects = () => {
   const cosmicExperiments = [
     {
       id: 1,
-      codename: "Quantum Commerce Engine",
-      mission: "Engineered a trans-galactic marketplace where beings across the universe can trade digital goods. Features quantum payment processing and interdimensional shipping calculations. Successfully facilitating 40,000+ stellar transactions daily.",
-      technologies: ["React", "Node.js", "MongoDB", "Quantum-Stripe", "CSS-Warp"],
+      codename: "Apple Censorship",
+      mission: "A comprehensive digital observatory exposing Apple's widespread censorship practices and their global consequences. Built to illuminate the hidden patterns of digital suppression and empower users with transparency through intuitive data visualization.",
+      technologies: ["React", "Tailwind CSS", "Next.js", "Node.js", "AWS", "MongoDB"],
       category: "fullstack",
       status: "Active Mission",
-      icon: "🛸"
+      icon: "🔍",
+      link: "https://applecensorship.com/"
     },
     {
       id: 2,
-      codename: "Neural Task Orchestrator",
-      mission: "Developed AI-powered task coordination for space crews. Drag-and-drop mission planning with real-time synchronization across multiple star systems. Zero communication delays regardless of distance.",
-      technologies: ["Vue.js", "Firebase", "Vuetify", "Quantum-Socket"],
+      codename: "GoGuitar AI",
+      mission: "Revolutionary AI-powered guitar learning platform that transforms YouTube videos into interactive guitar lessons. Users can search any YouTube video, and our AI analyzes the audio to generate synchronized guitar tabs that display alongside the video. Features real-time chat functionality where users can discuss music theory, techniques, and get AI-powered insights about the songs they're learning.",
+      technologies: ["React", "Tailwind CSS", "Next.js", "AI"],
       category: "ai",
-      status: "Deployed",
-      icon: "🤖"
+      status: "Active Mission",
+      icon: "🎸",
+      link: "http://goguitar.ai/"
     },
     {
       id: 3,
-      codename: "Cosmic Data Visualizer",
-      mission: "Transformed raw space telemetry into beautiful, interactive star maps and reports. Processes data from 50+ solar systems simultaneously, creating visualizations that would make nebulae jealous.",
-      technologies: ["React", "D3.js", "Python", "PostgreSQL", "FastAPI"],
+      codename: "Encore",
+      mission: "A comprehensive social community platform that empowers users to create, share, and monetize their content and personal experiences. Features include real-time content sharing, personal branding tools, intelligent recommendations, and content monetization capabilities. Built the entire web interface embedded within the mobile app plus a complete dashboard system for content management and analytics.",
+      technologies: ["React", "Next.js", "Tailwind CSS", "Node.js", "MongoDB"],
       category: "fullstack",
       status: "Active Mission",
-      icon: "🌌"
+      icon: "🌟",
+      link: "https://apps.apple.com/tw/app/encore-%E8%AE%93%E7%94%9F%E6%B4%BB%E6%85%8B%E5%BA%A6-%E5%83%B9%E5%80%BC%E7%84%A1%E9%99%90%E6%94%BE%E5%A4%A7%E7%9A%84%E7%A4%BE%E7%BE%A4/id1517658643"
     },
     {
       id: 4,
-      codename: "Atmospheric Prediction Matrix",
-      mission: "Mobile weather intelligence for planetary exploration. Predicts atmospheric conditions on any planet with 99.7% accuracy. Features immersive weather simulations that feel more real than reality.",
-      technologies: ["React Native", "Cosmic-Weather API", "Redux", "Expo"],
-      category: "mobile",
-      status: "Field Testing",
-      icon: "🌐"
+      codename: "Vpon Demo Platform",
+      mission: "An internal advertising demo platform that streamlines the client presentation process. Enables sales teams to quickly generate professional ad demos by simply uploading client images and selecting display formats. Creates shareable demo links that showcase how ads will appear across different placements and formats, significantly reducing the time from concept to client approval.",
+      technologies: ["React", "Node.js"],
+      category: "fullstack",
+      status: "Active Mission",
+      icon: "📱",
+      link: "https://demo.vpon.com/",
+      isInternal: true
     },
     {
       id: 5,
-      codename: "Universal Knowledge Archive",
-      mission: "Multi-dimensional blogging platform for sharing discoveries across galaxies. Features quantum markdown processing and AI-enhanced SEO that works across all known search algorithms in the universe.",
-      technologies: ["Next.js", "Sanity", "Vercel", "TypeScript"],
+      codename: "Voco FM",
+      mission: "An innovative audio sharing and broadcasting platform that connects users through voice content. Features include social audio sharing, audience building and tracking, community engagement, and a coin rewards system. Users can share everything from life stories to knowledge, participate in activities, and earn rewards for both publishing and listening. Built the complete web interface embedded within the mobile app plus a comprehensive dashboard system for content management and analytics.",
+      technologies: ["React", "Tailwind CSS", "Next.js", "Node.js", "MongoDB"],
       category: "fullstack",
-      status: "Research Phase",
-      icon: "📜"
+      status: "Active Mission",
+      icon: "🎙️",
+      link: "https://apps.apple.com/tw/app/voco/id1563869306?platform=iphone"
     },
     {
       id: 6,
-      codename: "Holographic Identity Matrix",
-      mission: "The very interface you're experiencing! A self-aware portfolio that adapts to each visitor's neural patterns. Features animations smoother than space-time and performance faster than light-speed travel.",
-      technologies: ["React", "Framer Motion", "Tailwind CSS", "Quantum-Vite"],
-      category: "ai",
+      codename: "Repurpose Wear",
+      mission: "A sophisticated e-commerce platform specializing in women's premium outerwear and fashion. Features a curated collection of jackets, coats, and accessories with diverse color palettes and sizing options. Responsible for crafting custom UI components and interactive elements that enhance the shopping experience, from product galleries to checkout flows, creating a seamless and visually appealing online retail environment.",
+      technologies: ["Shopify"],
+      category: "frontend",
       status: "Active Mission",
-      icon: "✨"
+      icon: "👗",
+      link: "https://repurpose-wear.com"
     }
   ]
 
@@ -331,7 +338,7 @@ const Projects = () => {
             <motion.div
               key={experiment.id}
               variants={itemVariants}
-              className="group relative rounded-xl overflow-hidden border-2 transition-all duration-200 hover:shadow-lg hover:-translate-y-1 bg-black/80 backdrop-blur-sm h-64"
+              className="group relative rounded-xl overflow-hidden border-2 transition-all duration-200 hover:shadow-lg hover:-translate-y-1 bg-black/80 backdrop-blur-sm h-72 cursor-pointer"
               style={{
                 borderColor: index % 3 === 0 ? 'rgba(0, 245, 255, 0.4)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)',
                 boxShadow: `0 6px 20px ${
@@ -355,34 +362,46 @@ const Projects = () => {
                   <div className="text-2xl">
                     {experiment.icon}
                   </div>
-                  <div className="px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
-                       style={{
-                         backgroundColor: `${
-                           experiment.status === 'Active Mission' ? 'rgba(0, 255, 135, 0.2)' :
-                           experiment.status === 'Deployed' ? 'rgba(0, 245, 255, 0.2)' :
-                           experiment.status === 'Field Testing' ? 'rgba(255, 0, 128, 0.2)' :
-                           'rgba(139, 92, 246, 0.2)'
-                         }`,
-                         borderColor: `${
-                           experiment.status === 'Active Mission' ? 'rgba(0, 255, 135, 0.5)' :
-                           experiment.status === 'Deployed' ? 'rgba(0, 245, 255, 0.5)' :
-                           experiment.status === 'Field Testing' ? 'rgba(255, 0, 128, 0.5)' :
-                           'rgba(139, 92, 246, 0.5)'
-                         }`,
-                         color: `${
-                           experiment.status === 'Active Mission' ? '#00ff87' :
-                           experiment.status === 'Deployed' ? '#00f5ff' :
-                           experiment.status === 'Field Testing' ? '#ff0080' :
-                           '#8b5cf6'
-                         }`
-                       }}>
-                    {experiment.status}
+                  <div className="flex gap-2">
+                    <div className="px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
+                         style={{
+                           backgroundColor: `${
+                             experiment.status === 'Active Mission' ? 'rgba(0, 255, 135, 0.2)' :
+                             experiment.status === 'Deployed' ? 'rgba(0, 245, 255, 0.2)' :
+                             experiment.status === 'Field Testing' ? 'rgba(255, 0, 128, 0.2)' :
+                             'rgba(139, 92, 246, 0.2)'
+                           }`,
+                           borderColor: `${
+                             experiment.status === 'Active Mission' ? 'rgba(0, 255, 135, 0.5)' :
+                             experiment.status === 'Deployed' ? 'rgba(0, 245, 255, 0.5)' :
+                             experiment.status === 'Field Testing' ? 'rgba(255, 0, 128, 0.5)' :
+                             'rgba(139, 92, 246, 0.5)'
+                           }`,
+                           color: `${
+                             experiment.status === 'Active Mission' ? '#00ff87' :
+                             experiment.status === 'Deployed' ? '#00f5ff' :
+                             experiment.status === 'Field Testing' ? '#ff0080' :
+                             '#8b5cf6'
+                           }`
+                         }}>
+                      {experiment.status}
+                    </div>
+                    {experiment.isInternal && (
+                      <div className="px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
+                           style={{
+                             backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                             borderColor: 'rgba(255, 165, 0, 0.5)',
+                             color: '#ffa500'
+                           }}>
+                        Internal
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-4 h-48 flex flex-col">
+              <div className="p-4 h-56 flex flex-col" onClick={() => experiment.link && window.open(experiment.link, '_blank')}>
                 <div className="text-neon-cyan font-mono text-xs mb-1">
                   PROJECT #{experiment.id.toString().padStart(3, '0')}
                 </div>
@@ -392,15 +411,18 @@ const Projects = () => {
                   <span className="absolute inset-0 hover-text-gradient-alt">{experiment.codename}</span>
                 </h3>
                 
-                <p className="text-white/70 text-xs leading-relaxed mb-3 flex-1 line-clamp-3">
-                  {experiment.mission.length > 120 ? experiment.mission.substring(0, 120) + '...' : experiment.mission}
-                </p>
+                <div className="flex-1 mb-3 overflow-hidden">
+                  <p className="text-white/70 text-xs leading-relaxed h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent hover:scrollbar-thumb-white/40" 
+                     onWheel={(e) => e.stopPropagation()}>
+                    {experiment.mission}
+                  </p>
+                </div>
 
                 {/* Tech Stack */}
                 <div className="space-y-1">
                   <div className="text-neon-green font-mono text-xs">TECH:</div>
                   <div className="flex flex-wrap gap-1">
-                    {experiment.technologies.slice(0, 3).map((tech) => (
+                    {experiment.technologies.slice(0, 4).map((tech) => (
                       <span
                         key={tech}
                         className="px-2 py-1 rounded-full text-xs font-medium border"
@@ -425,9 +447,9 @@ const Projects = () => {
                         {tech}
                       </span>
                     ))}
-                    {experiment.technologies.length > 3 && (
+                    {experiment.technologies.length > 4 && (
                       <span className="px-2 py-1 text-xs text-white/50">
-                        +{experiment.technologies.length - 3}
+                        +{experiment.technologies.length - 4}
                       </span>
                     )}
                   </div>
