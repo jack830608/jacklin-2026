@@ -121,7 +121,7 @@ body {
 /* Layout utilities */
 .section-container {
   width: 100%;
-  max-width: 100vw;
+  max-width: 1400px;
   overflow-x: hidden;
   position: relative;
 }
@@ -150,9 +150,9 @@ body {
   box-sizing: border-box !important;
 }
 
-*:not(html):not(body):not(.timeline-container):not(.timeline-container *) {
+/* *:not(html):not(body):not(.timeline-container):not(.timeline-container *) {
   max-width: 100vw !important;
-}
+} */
 
 /* Custom neon colors with reduced complexity */
 :root {
@@ -239,6 +239,28 @@ body {
   opacity: 0.6;
 }
 
+/* Custom scrollbar for project description */
+.project-description-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.project-description-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+}
+
+.project-description-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, var(--project-color, #00f5ff), rgba(255, 255, 255, 0.2));
+  opacity: 0.4;
+  border-radius: 2px;
+  transition: background 0.3s ease, opacity 0.3s ease;
+}
+
+.project-description-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, var(--project-color, #00f5ff), rgba(255, 255, 255, 0.4));
+  opacity: 0.6;
+}
+
 /* Mobile timeline container fixes */
 @media (max-width: 768px) {
   .timeline-container,
@@ -246,9 +268,9 @@ body {
     overflow-x: auto !important;
     overflow-y: hidden !important;
     /* Ensure proper touch scrolling */
-    -webkit-overflow-scrolling: touch;
+    /* -webkit-overflow-scrolling: touch; */
     /* Add touch action for better mobile scroll */
-    touch-action: pan-x;
+    /* touch-action: pan-x; */
     /* Force scroll behavior */
     scroll-behavior: auto;
     /* Ensure momentum scrolling on iOS */
@@ -339,13 +361,6 @@ body {
 /* Mobile optimization */
 @media (max-width: 640px) {
   /* Prevent horizontal overflow except for timeline and projects containers */
-  *:not(.timeline-container):not(.timeline-container *):not(.projects-container):not(.projects-container *),
-  *:not(.timeline-container):not(.timeline-container *)::before,
-  *:not(.timeline-container):not(.timeline-container *)::after {
-    max-width: 100vw !important;
-    overflow-x: hidden !important;
-    box-sizing: border-box !important;
-  }
   
   /* Explicitly allow timeline and projects elements to exceed viewport width */
   .timeline-container,
@@ -354,7 +369,10 @@ body {
   .projects-container * {
     max-width: none !important;
   }
-  
+}
+
+/* Mobile optimization */
+@media (max-width: 640px) {
   /* Force container constraints */
   body,
   html,

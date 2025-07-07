@@ -41,10 +41,61 @@ function App() {
       if (newSection !== currentSection) {
         setIsScrolling(true)
         setCurrentSection(newSection)
+        // 滾動到頂部
+        window.scrollTo({ top: 0, behavior: 'smooth' })
         setTimeout(() => setIsScrolling(false), 1000)
       }
     }
   }, [currentSection, isScrolling, sections.length])
+
+  // Touch event handlers for mobile
+  const [touchStart, setTouchStart] = useState(null)
+  const [touchEnd, setTouchEnd] = useState(null)
+  const [touchStartTime, setTouchStartTime] = useState(null)
+
+  const handleTouchStart = useCallback((e) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientY)
+    setTouchStartTime(Date.now())
+  }, [])
+
+  const handleTouchMove = useCallback((e) => {
+    setTouchEnd(e.targetTouches[0].clientY)
+  }, [])
+
+  const handleTouchEnd = useCallback(() => {
+    if (!touchStart || !touchEnd || !touchStartTime) return
+    if (isScrolling) return
+    
+    const distance = touchStart - touchEnd
+    const touchDuration = Date.now() - touchStartTime
+    const velocity = Math.abs(distance) / touchDuration
+    
+    // 提高靈敏度閾值：需要更大的距離或更快的速度
+    const minDistance = 80  // 從 50 增加到 80
+    const minVelocity = 0.3 // 最小速度閾值
+    
+    const isValidSwipe = Math.abs(distance) > minDistance && velocity > minVelocity
+    const isDownSwipe = distance > 0
+    const isUpSwipe = distance < 0
+    
+    if (isValidSwipe) {
+      if (isDownSwipe && currentSection < sections.length - 1) {
+        setIsScrolling(true)
+        setCurrentSection(currentSection + 1)
+        // 滾動到頂部
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        setTimeout(() => setIsScrolling(false), 1000)
+      }
+      if (isUpSwipe && currentSection > 0) {
+        setIsScrolling(true)
+        setCurrentSection(currentSection - 1)
+        // 滾動到頂部
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        setTimeout(() => setIsScrolling(false), 1000)
+      }
+    }
+  }, [touchStart, touchEnd, touchStartTime, isScrolling, currentSection, sections.length])
 
   const handleKeyDown = useCallback((e) => {
     if (isScrolling) return
@@ -60,6 +111,8 @@ function App() {
     if (newSection !== currentSection) {
       setIsScrolling(true)
       setCurrentSection(newSection)
+      // 滾動到頂部
+      window.scrollTo({ top: 0, behavior: 'smooth' })
       setTimeout(() => setIsScrolling(false), 1000)
     }
   }, [currentSection, isScrolling, sections.length])
@@ -68,6 +121,8 @@ function App() {
     if (!isScrolling) {
       setIsScrolling(true)
       setCurrentSection(index)
+      // 滾動到頂部
+      window.scrollTo({ top: 0, behavior: 'smooth' })
       setTimeout(() => setIsScrolling(false), 1000)
     }
   }, [isScrolling])
@@ -76,22 +131,37 @@ function App() {
     window.addEventListener('wheel', handleWheel, { passive: false })
     window.addEventListener('keydown', handleKeyDown)
     
+    // 只在桌面版添加觸控事件
+    const isMobile = window.innerWidth < 768
+    if (!isMobile) {
+      window.addEventListener('touchstart', handleTouchStart, { passive: true })
+      window.addEventListener('touchmove', handleTouchMove, { passive: true })
+      window.addEventListener('touchend', handleTouchEnd, { passive: true })
+    }
+    
     return () => {
       window.removeEventListener('wheel', handleWheel)
       window.removeEventListener('keydown', handleKeyDown)
+      if (!isMobile) {
+        window.removeEventListener('touchstart', handleTouchStart)
+        window.removeEventListener('touchmove', handleTouchMove)
+        window.removeEventListener('touchend', handleTouchEnd)
+      }
     }
-  }, [handleWheel, handleKeyDown])
+  }, [handleWheel, handleKeyDown, handleTouchStart, handleTouchMove, handleTouchEnd])
 
   return (
-    <div className="h-screen overflow-hidden bg-black text-white relative cursor-none w-full max-w-full">
+    <div className="h-screen overflow-hidden bg-black text-white relative lg:cursor-none w-full max-w-full">
       <div className="hidden lg:block">
         <PerformanceMonitor />
       </div>
-      <MouseFollower />
+      <div className="hidden lg:block">
+        <MouseFollower />
+      </div>
       <AnimatedBackground currentSection={currentSection} />
       
-      {/* Section Indicator - Planet Navigation */}
-      <div className="fixed right-4 sm:right-6 lg:right-8 top-4 sm:top-6 lg:top-8 z-50 flex flex-col">
+      {/* Section Indicator - Planet Navigation - 手機版隱藏 */}
+      <div className="hidden lg:flex fixed right-4 sm:right-6 lg:right-8 top-4 sm:top-6 lg:top-8 z-50 flex-col">
         {sections.map((section, index) => {
           const planetData = [
             { color: '#00f5ff', size: 18, name: 'Introduction', ring: false, type: 'earth' },
@@ -334,6 +404,206 @@ function App() {
             </motion.button>
           )
         })}
+      </div>
+
+      {/* 手機版宇宙導航控制台 */}
+      <div className="lg:hidden fixed top-6 right-4 z-50">
+        <motion.div
+          className="relative"
+          initial={{ opacity: 0, x: 50, y: -20 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          {/* 太空站艙門外框 */}
+          <motion.div
+            className="relative p-2 rounded-2xl"
+            style={{
+              background: 'radial-gradient(ellipse at center, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.8) 100%)',
+              border: '2px solid rgba(0, 245, 255, 0.4)',
+              boxShadow: '0 0 25px rgba(0, 245, 255, 0.3), inset 0 0 25px rgba(0, 245, 255, 0.1)',
+              backdropFilter: 'blur(15px)'
+            }}
+            animate={{
+              boxShadow: [
+                '0 0 25px rgba(0, 245, 255, 0.3), inset 0 0 25px rgba(0, 245, 255, 0.1)',
+                '0 0 35px rgba(0, 245, 255, 0.5), inset 0 0 30px rgba(0, 245, 255, 0.15)',
+                '0 0 25px rgba(0, 245, 255, 0.3), inset 0 0 25px rgba(0, 245, 255, 0.1)'
+              ]
+            }}
+            transition={{ duration: 4, repeat: Infinity }}
+          >
+
+            {/* 控制台內部結構 */}
+            <div className="flex flex-col gap-2">
+              {/* 上一個星系 - 離子推進器 */}
+              {currentSection > 0 && (
+                <motion.button
+                  onClick={() => {
+                    setIsScrolling(true)
+                    setCurrentSection(currentSection - 1)
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                    setTimeout(() => setIsScrolling(false), 1000)
+                  }}
+                  className="relative w-10 h-5 rounded-lg flex items-center justify-center group overflow-hidden"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(255, 0, 128, 0.2) 100%)',
+                    border: '1px solid rgba(139, 92, 246, 0.6)',
+                    boxShadow: '0 0 12px rgba(139, 92, 246, 0.4), inset 0 0 8px rgba(139, 92, 246, 0.2)'
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                >
+                  {/* 推進器噴口 */}
+                  <motion.div
+                    className="absolute inset-0 rounded-lg"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent 0%, rgba(139, 92, 246, 0.3) 50%, transparent 100%)'
+                    }}
+                    animate={{
+                      x: ['-100%', '100%']
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  {/* 箭頭 */}
+                  <svg className="w-3 h-3 text-purple-200 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+                  </svg>
+                  {/* 離子尾跡 */}
+                  <motion.div
+                    className="absolute -right-2 top-1/2 transform -translate-y-1/2 w-4 h-0.5 opacity-60"
+                    style={{
+                      background: 'linear-gradient(90deg, rgba(139, 92, 246, 0.8) 0%, transparent 100%)',
+                      filter: 'blur(0.5px)'
+                    }}
+                    animate={{
+                      opacity: [0.3, 0.8, 0.3],
+                      scaleX: [0.8, 1.2, 0.8]
+                    }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  />
+                </motion.button>
+              )}
+
+              {/* 中央能量核心 */}
+              <motion.div
+                className="w-10 h-3 rounded-full relative overflow-hidden mx-auto"
+                style={{
+                  background: 'radial-gradient(ellipse, rgba(0, 245, 255, 0.4) 0%, rgba(0, 245, 255, 0.1) 100%)',
+                  border: '1px solid rgba(0, 245, 255, 0.5)',
+                  boxShadow: '0 0 15px rgba(0, 245, 255, 0.6), inset 0 0 10px rgba(0, 245, 255, 0.3)'
+                }}
+                animate={{
+                  boxShadow: [
+                    '0 0 15px rgba(0, 245, 255, 0.6), inset 0 0 10px rgba(0, 245, 255, 0.3)',
+                    '0 0 25px rgba(0, 245, 255, 0.8), inset 0 0 15px rgba(0, 245, 255, 0.5)',
+                    '0 0 15px rgba(0, 245, 255, 0.6), inset 0 0 10px rgba(0, 245, 255, 0.3)'
+                  ]
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                {/* 能量流 */}
+                <motion.div
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent)'
+                  }}
+                  animate={{
+                    x: ['-100%', '100%']
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                />
+              </motion.div>
+
+              {/* 下一個星系 - 量子驅動器 */}
+              {currentSection < sections.length - 1 && (
+                <motion.button
+                  onClick={() => {
+                    setIsScrolling(true)
+                    setCurrentSection(currentSection + 1)
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                    setTimeout(() => setIsScrolling(false), 1000)
+                  }}
+                  className="relative w-10 h-5 rounded-lg flex items-center justify-center group overflow-hidden"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(0, 255, 135, 0.3) 0%, rgba(0, 245, 255, 0.2) 100%)',
+                    border: '1px solid rgba(0, 255, 135, 0.6)',
+                    boxShadow: '0 0 12px rgba(0, 255, 135, 0.4), inset 0 0 8px rgba(0, 255, 135, 0.2)'
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                >
+                  {/* 量子波動 */}
+                  <motion.div
+                    className="absolute inset-0 rounded-lg"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent 0%, rgba(0, 255, 135, 0.3) 50%, transparent 100%)'
+                    }}
+                    animate={{
+                      x: ['-100%', '100%']
+                    }}
+                    transition={{
+                      duration: 1.2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 0.3
+                    }}
+                  />
+                  {/* 箭頭 */}
+                  <svg className="w-3 h-3 text-green-200 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+                  </svg>
+                  {/* 量子尾跡 */}
+                  <motion.div
+                    className="absolute -left-2 top-1/2 transform -translate-y-1/2 w-4 h-0.5 opacity-60"
+                    style={{
+                      background: 'linear-gradient(270deg, rgba(0, 255, 135, 0.8) 0%, transparent 100%)',
+                      filter: 'blur(0.5px)'
+                    }}
+                    animate={{
+                      opacity: [0.3, 0.8, 0.3],
+                      scaleX: [0.8, 1.2, 0.8]
+                    }}
+                    transition={{ duration: 1.2, repeat: Infinity, delay: 0.2 }}
+                  />
+                </motion.button>
+              )}
+            </div>
+
+            {/* 周圍星塵粒子 */}
+            {[...Array(4)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 rounded-full"
+                style={{
+                  background: 'radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 100%)',
+                  left: `${20 + i * 15}%`,
+                  top: `${10 + i * 20}%`
+                }}
+                animate={{
+                  opacity: [0.2, 0.8, 0.2],
+                  scale: [0.5, 1, 0.5]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  delay: i * 0.5
+                }}
+              />
+            ))}
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Main Content */}

@@ -133,11 +133,11 @@ const Projects = () => {
         transition={{ duration: 2, ease: "easeOut" }}
       >
         {/* Static Background Stars - CSS animated for better performance */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 pointer-events-none">
           {[...Array(70)].map((_, i) => (
             <div
               key={`static-star-${i}`}
-              className="absolute bg-white rounded-full animate-twinkle"
+              className="absolute bg-white rounded-full animate-twinkle pointer-events-none"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -182,11 +182,11 @@ const Projects = () => {
         ))}
         
         {/* Simplified Stars - CSS animated */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 pointer-events-none">
           {starData.map((star) => (
             <div
               key={`distant-star-${star.id}`}
-              className="absolute rounded-full bg-white animate-twinkle"
+              className="absolute rounded-full bg-white animate-twinkle pointer-events-none"
               style={{
                 left: `${star.left}%`,
                 top: `${star.top}%`,
@@ -202,11 +202,11 @@ const Projects = () => {
         </div>
         
         {/* Simplified Cosmic Dust - CSS animated */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 pointer-events-none">
           {cosmicDustData.map((dust) => (
             <div
               key={`cosmic-dust-${dust.id}`}
-              className="absolute rounded-full animate-float"
+              className="absolute rounded-full animate-float pointer-events-none"
               style={{
                 left: `${dust.left}%`,
                 top: `${dust.top}%`,
@@ -327,7 +327,7 @@ const Projects = () => {
         </motion.div>
 
         {/* Projects Container - Horizontal scroll on mobile, grid on desktop */}
-        <div className="w-full max-w-6xl mx-auto">
+        <div className="w-full mx-auto px-2">
           {/* Mobile: Horizontal Scroll */}
           <div className="block lg:hidden">
             <div className="overflow-x-auto overflow-y-hidden projects-container" 
@@ -342,7 +342,7 @@ const Projects = () => {
                    e.stopPropagation();
                  }}>
               <motion.div 
-                className="flex gap-4 pb-4"
+                className="flex gap-4 pb-4 px-2"
                 style={{ width: `${cosmicExperiments.length * 320 + 100}px` }}
                 variants={containerVariants}
                 initial="hidden"
@@ -356,7 +356,7 @@ const Projects = () => {
                     className="group relative rounded-xl overflow-hidden border-2 bg-black/80 backdrop-blur-sm cursor-pointer flex-shrink-0"
                     style={{
                       width: '300px',
-                      height: '400px',
+                      height: '420px',
                     }}
                     initial={{
                       borderColor: index % 3 === 0 ? 'rgba(0, 245, 255, 0.4)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)',
@@ -369,12 +369,7 @@ const Projects = () => {
                     whileHover={{
                       y: -8,
                       scale: 1.02,
-                      borderColor: index % 3 === 0 ? 'rgba(0, 245, 255, 0.8)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.8)' : 'rgba(0, 255, 135, 0.8)',
-                      boxShadow: `0 20px 40px ${
-                        index % 3 === 0 ? 'rgba(0, 245, 255, 0.3)' : 
-                        index % 3 === 1 ? 'rgba(139, 92, 246, 0.3)' : 
-                        'rgba(0, 255, 135, 0.3)'
-                      }`
+                      borderColor: index % 3 === 0 ? 'rgba(0, 245, 255, 0.8)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.8)' : 'rgba(0, 255, 135, 0.8)'
                     }}
                     whileTap={{ scale: 0.98 }}
                     animate={{
@@ -401,32 +396,12 @@ const Projects = () => {
                          }}>
                       <div className="absolute inset-0 bg-black/50"></div>
                       <div className="flex items-center justify-between p-3">
-                        <motion.div 
-                          className="text-2xl"
-                          animate={{
-                            rotate: [0, 5, -5, 0],
-                            scale: [1, 1.1, 1, 1.05, 1]
-                          }}
-                          transition={{
-                            duration: 4 + index * 0.3,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                          }}
-                        >
+                        <div className="text-2xl">
                           {experiment.icon}
-                        </motion.div>
+                        </div>
                         <div className="flex gap-2">
-                          <motion.div 
+                          <div 
                             className="px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
-                            animate={{
-                              scale: [1, 1.05, 1],
-                              opacity: [0.8, 1, 0.8]
-                            }}
-                            transition={{
-                              duration: 2,
-                              repeat: Infinity,
-                              ease: "easeInOut"
-                            }}
                             style={{
                                  backgroundColor: `${
                                    experiment.status === 'Active Mission' ? 'rgba(0, 255, 135, 0.2)' :
@@ -448,7 +423,7 @@ const Projects = () => {
                                  }`
                                }}>
                             {experiment.status}
-                          </motion.div>
+                          </div>
                           {experiment.isInternal && (
                             <div className="px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
                                  style={{
@@ -469,33 +444,13 @@ const Projects = () => {
                         PROJECT #{experiment.id.toString().padStart(3, '0')}
                       </div>
                       
-                      <motion.h3 
-                        className="text-base font-bold text-white mb-2 leading-tight relative"
-                        whileHover={{ scale: 1.02 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <motion.span 
-                          className="block"
-                          animate={{
-                            color: [
-                              '#ffffff',
-                              index % 3 === 0 ? '#00f5ff' : index % 3 === 1 ? '#8b5cf6' : '#00ff87',
-                              '#ffffff'
-                            ]
-                          }}
-                          transition={{
-                            duration: 4 + index * 0.5,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                          }}
-                        >
-                          {experiment.codename}
-                        </motion.span>
-                        <span className="absolute inset-0 hover-text-gradient-alt opacity-0 group-hover:opacity-100 transition-opacity duration-300">{experiment.codename}</span>
-                      </motion.h3>
+                      <h3 className="text-base font-bold text-white mb-2 leading-tight relative group-hover:text-neon-cyan transition-colors duration-300">
+                        {experiment.codename}
+                      </h3>
                       
                       <div className="flex-1 mb-3 overflow-hidden">
-                        <p className="text-white/70 text-xs leading-relaxed h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent hover:scrollbar-thumb-white/40" 
+                        <p className="text-white/70 text-xs leading-relaxed h-full overflow-y-auto pr-2 project-description-scroll" 
+                           style={{ '--project-color': index % 3 === 0 ? '#00f5ff' : index % 3 === 1 ? '#8b5cf6' : '#00ff87' }}
                            onWheel={(e) => e.stopPropagation()}>
                           {experiment.mission}
                         </p>
@@ -506,24 +461,9 @@ const Projects = () => {
                         <div className="text-neon-green font-mono text-xs">TECH:</div>
                         <div className="flex flex-wrap gap-1">
                           {experiment.technologies.slice(0, 4).map((tech, techIndex) => (
-                            <motion.span
+                            <span
                               key={tech}
-                              className="px-2 py-1 rounded-full text-xs font-medium border"
-                              initial={{ opacity: 0, scale: 0.8 }}
-                              animate={{ 
-                                opacity: 1, 
-                                scale: 1,
-                                y: [0, -2, 0]
-                              }}
-                              transition={{
-                                delay: techIndex * 0.1,
-                                y: {
-                                  duration: 2 + techIndex * 0.2,
-                                  repeat: Infinity,
-                                  ease: "easeInOut"
-                                }
-                              }}
-                              whileHover={{ scale: 1.1, y: -4 }}
+                              className="px-2 py-1 rounded-full text-xs font-medium border transition-transform duration-200 hover:scale-110"
                               style={{
                                 backgroundColor: `${
                                   index % 3 === 0 ? 'rgba(0, 245, 255, 0.1)' : 
@@ -543,7 +483,7 @@ const Projects = () => {
                               }}
                             >
                               {tech}
-                            </motion.span>
+                            </span>
                           ))}
                           {experiment.technologies.length > 4 && (
                             <span className="px-2 py-1 text-xs text-white/50">
@@ -565,7 +505,7 @@ const Projects = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="hidden lg:grid grid-cols-3 gap-4"
+            className="hidden lg:grid grid-cols-3 gap-6 p-4"
           >
             {cosmicExperiments.slice(0, 6).map((experiment, index) => (
               <motion.div
@@ -583,26 +523,9 @@ const Projects = () => {
                 whileHover={{
                   y: -8,
                   scale: 1.02,
-                  borderColor: index % 3 === 0 ? 'rgba(0, 245, 255, 0.8)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.8)' : 'rgba(0, 255, 135, 0.8)',
-                  boxShadow: `0 20px 40px ${
-                    index % 3 === 0 ? 'rgba(0, 245, 255, 0.3)' : 
-                    index % 3 === 1 ? 'rgba(139, 92, 246, 0.3)' : 
-                    'rgba(0, 255, 135, 0.3)'
-                  }`
+                  borderColor: index % 3 === 0 ? 'rgba(0, 245, 255, 0.8)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.8)' : 'rgba(0, 255, 135, 0.8)'
                 }}
                 whileTap={{ scale: 0.98 }}
-                animate={{
-                  borderColor: [
-                    index % 3 === 0 ? 'rgba(0, 245, 255, 0.4)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)',
-                    index % 3 === 0 ? 'rgba(0, 245, 255, 0.6)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.6)' : 'rgba(0, 255, 135, 0.6)',
-                    index % 3 === 0 ? 'rgba(0, 245, 255, 0.4)' : index % 3 === 1 ? 'rgba(139, 92, 246, 0.4)' : 'rgba(0, 255, 135, 0.4)'
-                  ]
-                }}
-                transition={{ 
-                  duration: 3 + index * 0.5, 
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
               >
                 {/* Header */}
                 <div className="relative h-16 overflow-hidden"
@@ -615,32 +538,12 @@ const Projects = () => {
                      }}>
                   <div className="absolute inset-0 bg-black/50"></div>
                   <div className="flex items-center justify-between p-3">
-                    <motion.div 
-                      className="text-2xl"
-                      animate={{
-                        rotate: [0, 5, -5, 0],
-                        scale: [1, 1.1, 1, 1.05, 1]
-                      }}
-                      transition={{
-                        duration: 4 + index * 0.3,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    >
+                    <div className="text-2xl">
                       {experiment.icon}
-                    </motion.div>
+                    </div>
                     <div className="flex gap-2">
-                      <motion.div 
+                      <div 
                         className="px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
-                        animate={{
-                          scale: [1, 1.05, 1],
-                          opacity: [0.8, 1, 0.8]
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
                         style={{
                              backgroundColor: `${
                                experiment.status === 'Active Mission' ? 'rgba(0, 255, 135, 0.2)' :
@@ -662,7 +565,7 @@ const Projects = () => {
                              }`
                            }}>
                         {experiment.status}
-                      </motion.div>
+                      </div>
                       {experiment.isInternal && (
                         <div className="px-2 py-1 rounded-full text-xs font-bold border backdrop-blur-sm"
                              style={{
@@ -683,33 +586,13 @@ const Projects = () => {
                     PROJECT #{experiment.id.toString().padStart(3, '0')}
                   </div>
                   
-                  <motion.h3 
-                    className="text-base font-bold text-white mb-2 leading-tight relative"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <motion.span 
-                      className="block"
-                      animate={{
-                        color: [
-                          '#ffffff',
-                          index % 3 === 0 ? '#00f5ff' : index % 3 === 1 ? '#8b5cf6' : '#00ff87',
-                          '#ffffff'
-                        ]
-                      }}
-                      transition={{
-                        duration: 4 + index * 0.5,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    >
-                      {experiment.codename}
-                    </motion.span>
-                    <span className="absolute inset-0 hover-text-gradient-alt opacity-0 group-hover:opacity-100 transition-opacity duration-300">{experiment.codename}</span>
-                  </motion.h3>
+                  <h3 className="text-base font-bold text-white mb-2 leading-tight relative group-hover:text-neon-cyan transition-colors duration-300">
+                    {experiment.codename}
+                  </h3>
                   
                   <div className="flex-1 mb-3 overflow-hidden">
-                    <p className="text-white/70 text-xs leading-relaxed h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent hover:scrollbar-thumb-white/40" 
+                    <p className="text-white/70 text-xs leading-relaxed h-full overflow-y-auto pr-2 project-description-scroll" 
+                       style={{ '--project-color': index % 3 === 0 ? '#00f5ff' : index % 3 === 1 ? '#8b5cf6' : '#00ff87' }}
                        onWheel={(e) => e.stopPropagation()}>
                       {experiment.mission}
                     </p>
@@ -720,24 +603,9 @@ const Projects = () => {
                     <div className="text-neon-green font-mono text-xs">TECH:</div>
                     <div className="flex flex-wrap gap-1">
                       {experiment.technologies.slice(0, 4).map((tech, techIndex) => (
-                        <motion.span
+                        <span
                           key={tech}
-                          className="px-2 py-1 rounded-full text-xs font-medium border"
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ 
-                            opacity: 1, 
-                            scale: 1,
-                            y: [0, -2, 0]
-                          }}
-                          transition={{
-                            delay: techIndex * 0.1,
-                            y: {
-                              duration: 2 + techIndex * 0.2,
-                              repeat: Infinity,
-                              ease: "easeInOut"
-                            }
-                          }}
-                          whileHover={{ scale: 1.1, y: -4 }}
+                          className="px-2 py-1 rounded-full text-xs font-medium border transition-transform duration-200 hover:scale-110"
                           style={{
                             backgroundColor: `${
                               index % 3 === 0 ? 'rgba(0, 245, 255, 0.1)' : 
@@ -757,7 +625,7 @@ const Projects = () => {
                           }}
                         >
                           {tech}
-                        </motion.span>
+                        </span>
                       ))}
                       {experiment.technologies.length > 4 && (
                         <span className="px-2 py-1 text-xs text-white/50">

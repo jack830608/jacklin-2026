@@ -308,7 +308,7 @@ const Introduction = () => {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="text-center lg:text-left w-full lg:max-w-md order-2 lg:order-1"
+            className="text-center lg:text-left w-full order-2 lg:order-1"
           >
           {/* Cosmic Greeting */}
           <motion.div
@@ -633,7 +633,7 @@ const Introduction = () => {
             className="relative flex items-center justify-center h-auto lg:h-full order-1 lg:order-2 w-full"
           >
             {/* Solar System Container */}
-            <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 mx-auto">
+            <div className="overflow-hidden relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 mx-auto lg:overflow-visible">
               
               {/* Central Sun */}
               <motion.div
